@@ -351,7 +351,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </symbols>
 <devicesets>
 <deviceset name="AT8010-E2R9HAA">
-<description>2.4-GHz chip antenna, 8.0 × 1.0 mm</description>
 <gates>
 <gate name="G$1" symbol="AT8010-E2R9HAA" x="-5.08" y="0"/>
 </gates>
@@ -429,7 +428,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="TLV70236">
-<description>Regulator LDO 3.6V 300mA</description>
 <gates>
 <gate name="G$1" symbol="TLV70236" x="0" y="0"/>
 </gates>
@@ -449,7 +447,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="TXB0106">
-<description>6 Bit Non-inverting Voltage Level Translator</description>
 <gates>
 <gate name="G$1" symbol="TXB0106" x="7.62" y="-5.08"/>
 </gates>
@@ -480,7 +477,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="INDUCTOR">
-<description>Inductor</description>
 <gates>
 <gate name="G$1" symbol="INDUCTOR" x="0" y="2.54"/>
 </gates>

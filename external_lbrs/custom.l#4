@@ -77,8 +77,8 @@
 <wire x1="-0.6" y1="-0.9" x2="8.6" y2="-0.9" width="0.127" layer="21"/>
 <wire x1="8.6" y1="-0.9" x2="8.6" y2="0.9" width="0.127" layer="21"/>
 <wire x1="8.6" y1="0.9" x2="-0.6" y2="0.9" width="0.127" layer="21"/>
-<text x="-0.4" y="1.1" size="1.27" layer="25">&gt;Name</text>
-<text x="-0.4" y="-2.4" size="1.27" layer="27">&gt;Value</text>
+<text x="-0.4" y="1.1" size="1.27" layer="1">&gt;Name</text>
+<text x="-0.4" y="-2.4" size="1.27" layer="1">&gt;Value</text>
 <circle x="-1" y="1.3" radius="0.1" width="0.5" layer="21"/>
 </package>
 <package name="CC3000MOD">
@@ -345,13 +345,10 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 <wire x1="1.27" y1="6.35" x2="0" y2="7.62" width="0.254" layer="94" curve="90"/>
 <pin name="1" x="0" y="10.16" visible="off" length="short" rot="R270"/>
 <pin name="2" x="0" y="-2.54" visible="off" length="short" rot="R90"/>
-<text x="2.54" y="5.08" size="1.778" layer="94">&gt;Name</text>
-<text x="2.54" y="2.54" size="1.778" layer="94">&gt;Value</text>
 </symbol>
 </symbols>
 <devicesets>
 <deviceset name="AT8010-E2R9HAA">
-<description>2.4-GHz chip antenna, 8.0 × 1.0 mm</description>
 <gates>
 <gate name="G$1" symbol="AT8010-E2R9HAA" x="-5.08" y="0"/>
 </gates>
@@ -368,7 +365,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="CC3000MOD">
-<description>Wi-Fi 802.11b/g Network Processor</description>
 <gates>
 <gate name="G$1" symbol="CC3000MOD" x="0" y="0"/>
 </gates>
@@ -429,7 +425,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="TLV70236">
-<description>Regulator LDO 3.6V 300mA</description>
 <gates>
 <gate name="G$1" symbol="TLV70236" x="0" y="0"/>
 </gates>
@@ -449,7 +444,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="TXB0106">
-<description>6 Bit Non-inverting Voltage Level Translator</description>
 <gates>
 <gate name="G$1" symbol="TXB0106" x="7.62" y="-5.08"/>
 </gates>
@@ -480,7 +474,6 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="INDUCTOR">
-<description>Inductor</description>
 <gates>
 <gate name="G$1" symbol="INDUCTOR" x="0" y="2.54"/>
 </gates>
