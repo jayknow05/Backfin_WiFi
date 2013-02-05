@@ -232,6 +232,17 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 <rectangle x1="-0.5" y1="-0.25" x2="-0.225" y2="0.25" layer="51"/>
 <rectangle x1="0.225" y1="-0.25" x2="0.5" y2="0.25" layer="51"/>
 </package>
+<package name="0OHM_JMPR_0402">
+<wire x1="-0.425" y1="0.2" x2="0.425" y2="0.2" width="0.1016" layer="51"/>
+<wire x1="0.425" y1="-0.2" x2="-0.425" y2="-0.2" width="0.1016" layer="51"/>
+<smd name="1" x="-0.6" y="0" dx="0.925" dy="0.74" layer="1"/>
+<smd name="2" x="0.6" y="0" dx="0.925" dy="0.74" layer="1"/>
+<text x="-0.5" y="0.425" size="1.016" layer="25">&gt;NAME</text>
+<text x="-0.5" y="-1.45" size="1.016" layer="27">&gt;VALUE</text>
+<rectangle x1="-0.5" y1="-0.25" x2="-0.225" y2="0.25" layer="51"/>
+<rectangle x1="0.225" y1="-0.25" x2="0.5" y2="0.25" layer="51"/>
+<smd name="3" x="1.8" y="0" dx="0.925" dy="0.74" layer="1"/>
+</package>
 </packages>
 <symbols>
 <symbol name="AT8010-E2R9HAA">
@@ -348,9 +359,20 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 <text x="2.54" y="5.08" size="1.778" layer="94">&gt;Name</text>
 <text x="2.54" y="2.54" size="1.778" layer="94">&gt;Value</text>
 </symbol>
+<symbol name="0OHM_JMPR">
+<text x="2.54" y="1.905" size="1.27" layer="94">&gt;Name</text>
+<rectangle x1="-0.9525" y1="-0.9525" x2="0.9525" y2="0.9525" layer="94"/>
+<rectangle x1="-0.9525" y1="1.905" x2="0.9525" y2="3.81" layer="94"/>
+<rectangle x1="-0.9525" y1="-3.81" x2="0.9525" y2="-1.905" layer="94"/>
+<pin name="1" x="0" y="2.8575" visible="off" length="point"/>
+<pin name="2" x="0" y="0" visible="off" length="point"/>
+<pin name="3" x="0" y="-2.8575" visible="off" length="point"/>
+<text x="2.54" y="-0.3175" size="1.27" layer="94">&gt;Value</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="AT8010-E2R9HAA">
+<description>2.4-GHz chip antenna, 8.0 × 1.0 mm</description>
 <gates>
 <gate name="G$1" symbol="AT8010-E2R9HAA" x="-5.08" y="0"/>
 </gates>
@@ -428,6 +450,7 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="TLV70236">
+<description>Regulator LDO 3.6V 300mA</description>
 <gates>
 <gate name="G$1" symbol="TLV70236" x="0" y="0"/>
 </gates>
@@ -447,6 +470,7 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="TXB0106">
+<description>6 Bit Non-inverting Voltage Level Translator</description>
 <gates>
 <gate name="G$1" symbol="TXB0106" x="7.62" y="-5.08"/>
 </gates>
@@ -477,6 +501,7 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </devices>
 </deviceset>
 <deviceset name="INDUCTOR">
+<description>Inductor</description>
 <gates>
 <gate name="G$1" symbol="INDUCTOR" x="0" y="2.54"/>
 </gates>
@@ -485,6 +510,23 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 <connects>
 <connect gate="G$1" pin="1" pad="1"/>
 <connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="0OHM_JMPR">
+<gates>
+<gate name="G$1" symbol="0OHM_JMPR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="0OHM_JMPR_0402">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
 </connects>
 <technologies>
 <technology name=""/>

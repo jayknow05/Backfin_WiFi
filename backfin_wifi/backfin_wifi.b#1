@@ -2880,7 +2880,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="42.6788" y="9.3552" size="1.016" layer="25" rot="R90"/>
 </element>
 <element name="C2" library="rcl" package="C0402K" value="2.2pF" x="48.895" y="8.255" smashed="yes" rot="R180">
-<attribute name="NAME" x="49.8014" y="7.6776" size="1.016" layer="25" rot="R180"/>
+<attribute name="NAME" x="49.395" y="7.83" size="1.016" layer="25" rot="R180"/>
 </element>
 <element name="C3" library="rcl" package="C0402K" value="1uF" x="31.877" y="26.4668" smashed="yes">
 <attribute name="NAME" x="28.8624" y="26.0282" size="1.016" layer="25"/>
@@ -2909,10 +2909,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="46.99" y="12.51" size="1.27" layer="25" rot="R180"/>
 </element>
 <element name="L1" library="custom" package="0402" value="2.2nH" x="45.72" y="8.89" smashed="yes" rot="R90">
-<attribute name="NAME" x="45.1934" y="8.263" size="1.016" layer="25" rot="R90"/>
+<attribute name="NAME" x="45.295" y="8.39" size="1.016" layer="25" rot="R90"/>
 </element>
 <element name="L2" library="custom" package="0402" value="NL" x="52.07" y="8.89" smashed="yes" rot="R90">
-<attribute name="NAME" x="51.5688" y="8.263" size="1.016" layer="25" rot="R90"/>
+<attribute name="NAME" x="51.645" y="8.39" size="1.016" layer="25" rot="R90"/>
 </element>
 <element name="ANT1" library="custom" package="AT8010-E2R9HAA" value="AT8010-E2R9HAA" x="67.31" y="11.43" smashed="yes" rot="R90">
 <attribute name="NAME" x="66.083" y="11.1824" size="1.27" layer="25" rot="R90"/>
