@@ -2889,7 +2889,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="28.8116" y="23.5644" size="1.016" layer="25"/>
 </element>
 <element name="U$2" library="adafruit" package="ARDUINO" value="ARDUINOUNO" x="0" y="0"/>
-<element name="J1" library="pinhead" package="2X03" value="" x="64.897" y="27.94" rot="R90"/>
+<element name="J1" library="pinhead" package="2X03" value="" x="64.897" y="27.94" smashed="yes" rot="R270">
+<attribute name="NAME" x="60.706" y="26.3398" size="1.27" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="60.452" y="31.75" size="1.27" layer="27" rot="R270"/>
+</element>
 <element name="C5" library="resistor" package="C0402K" value="1uF" x="33.9852" y="37.7952" smashed="yes">
 <attribute name="NAME" x="33.155" y="38.3726" size="1.016" layer="25"/>
 </element>
@@ -3033,7 +3036,7 @@ design rules under a new name.</description>
 <wire x1="43.18" y1="2.54" x2="45.72" y2="9.49" width="0" layer="19" extent="1-1"/>
 <wire x1="40.64" y1="2.54" x2="43.18" y2="2.54" width="0" layer="19" extent="1-1"/>
 <wire x1="57.3428" y1="21.0058" x2="46.09" y2="25.26" width="0" layer="19" extent="1-1"/>
-<wire x1="63.627" y1="30.48" x2="57.3428" y2="21.0058" width="0" layer="19" extent="1-1"/>
+<wire x1="66.167" y1="25.4" x2="57.3428" y2="21.0058" width="0" layer="19" extent="1-1"/>
 <wire x1="26.416" y1="50.8" x2="38.8112" y2="42.891" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
@@ -3162,17 +3165,17 @@ design rules under a new name.</description>
 <signal name="SPI_CLK_HOST">
 <contactref element="J1" pad="3"/>
 <contactref element="U8" pad="14"/>
-<wire x1="39.665" y1="39.755" x2="66.167" y2="27.94" width="0" layer="19" extent="1-1"/>
+<wire x1="39.665" y1="39.755" x2="63.627" y2="27.94" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SPI_DIN_HOST">
 <contactref element="J1" pad="4"/>
 <contactref element="U8" pad="13"/>
-<wire x1="40.315" y1="39.755" x2="63.627" y2="27.94" width="0" layer="19" extent="1-1"/>
+<wire x1="40.315" y1="39.755" x2="66.167" y2="27.94" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SPI_DOUT_HOST">
 <contactref element="J1" pad="1"/>
 <contactref element="U8" pad="11"/>
-<wire x1="41.615" y1="39.755" x2="66.167" y2="25.4" width="0" layer="19" extent="1-1"/>
+<wire x1="41.615" y1="39.755" x2="63.627" y2="30.48" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="SPI_CS_HOST">
 <contactref element="U8" pad="16"/>
@@ -3233,7 +3236,7 @@ design rules under a new name.</description>
 <contactref element="U7" pad="3"/>
 <contactref element="R4" pad="1"/>
 <contactref element="J1" pad="2"/>
-<wire x1="63.627" y1="25.4" x2="60.1068" y2="42.6974" width="0" layer="19" extent="1-1"/>
+<wire x1="66.167" y1="30.48" x2="60.1068" y2="42.6974" width="0" layer="19" extent="1-1"/>
 <wire x1="39.015" y1="39.755" x2="60.1068" y2="42.6974" width="0" layer="19" extent="1-1"/>
 <wire x1="38.8112" y1="41.691" x2="39.015" y2="39.755" width="0" layer="19" extent="1-1"/>
 <wire x1="33.3852" y1="37.7952" x2="39.015" y2="39.755" width="0" layer="19" extent="1-1"/>

@@ -3114,8 +3114,8 @@ design rules under a new name.</description>
 <via x="41.2496" y="16.1798" extent="1-16" drill="0.381"/>
 <wire x1="41.2496" y1="16.1798" x2="41.2496" y2="15.3162" width="0.6096" layer="1"/>
 <polygon width="0.3556" layer="1" isolate="0.3048" thermals="no">
-<vertex x="28.3972" y="39.624"/>
-<vertex x="41.6814" y="39.624"/>
+<vertex x="27.942540625" y="39.149021875"/>
+<vertex x="41.226740625" y="39.149021875"/>
 <vertex x="43.9928" y="37.3126"/>
 <vertex x="43.9928" y="34.036"/>
 <vertex x="45.4152" y="32.6136"/>
