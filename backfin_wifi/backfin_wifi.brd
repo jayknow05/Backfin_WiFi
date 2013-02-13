@@ -37,9 +37,9 @@
 <layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
-<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
-<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="yes" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="yes" active="yes"/>
 <layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
@@ -52,7 +52,7 @@
 <layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
@@ -132,10 +132,6 @@
 </layers>
 <board>
 <plain>
-<hole x="15.24" y="50.8" drill="3.175"/>
-<hole x="66.04" y="35.56" drill="3.175"/>
-<hole x="66.04" y="7.62" drill="3.175"/>
-<hole x="13.97" y="2.54" drill="3.175"/>
 <text x="14.224" y="16.4592" size="1.778" layer="25" rot="R90">Backfin WiFi v0.0</text>
 <text x="16.891" y="15.24" size="1.778" layer="25" rot="R90">Arduino Compatible</text>
 <text x="20.066" y="15.0622" size="1.778" layer="25" rot="R90">S/N:</text>
@@ -3925,8 +3921,8 @@ design rules under a new name.</description>
 <param name="rvPadTop" value="0.25"/>
 <param name="rvPadInner" value="0.25"/>
 <param name="rvPadBottom" value="0.25"/>
-<param name="rvViaOuter" value="0.25"/>
-<param name="rvViaInner" value="0.25"/>
+<param name="rvViaOuter" value="0.095"/>
+<param name="rvViaInner" value="0.095"/>
 <param name="rvMicroViaOuter" value="0.25"/>
 <param name="rvMicroViaInner" value="0.25"/>
 <param name="rlMinPadTop" value="10mil"/>
@@ -4125,7 +4121,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="56.812884375" y="13.33538125" size="1.016" layer="25" rot="R90"/>
 </element>
 <element name="L2" library="custom" package="0402" value="NL" x="58.801" y="12.5222" smashed="yes" rot="R90">
-<attribute name="NAME" x="60.5096" y="13.3176" size="1.016" layer="25" rot="R90"/>
+<attribute name="NAME" x="60.535" y="13.343" size="1.016" layer="25" rot="R90"/>
 </element>
 <element name="ANT1" library="custom" package="AT8010-E2R9HAA" value="AT8010-E2R9HAA" x="73.9394" y="16.256" smashed="yes" rot="R90">
 <attribute name="NAME" x="72.7124" y="16.0084" size="1.27" layer="25" rot="R90"/>
@@ -4210,54 +4206,54 @@ design rules under a new name.</description>
 <contactref element="U2" pad="GND2"/>
 <contactref element="U2" pad="GND"/>
 <wire x1="58.801" y1="14.1224" x2="58.801" y2="13.1222" width="0.4064" layer="1"/>
-<via x="58.801" y="14.1224" extent="1-16" drill="0.3556"/>
-<via x="55.118" y="14.1224" extent="1-16" drill="0.3556"/>
+<via x="58.801" y="14.1224" extent="1-16" drill="0.381"/>
+<via x="55.118" y="14.1224" extent="1-16" drill="0.381"/>
 <wire x1="45.3136" y1="15.2654" x2="46.2534" y2="15.2654" width="0.6096" layer="1"/>
 <wire x1="45.3136" y1="15.2654" x2="45.3026" y2="15.2578" width="0.4064" layer="1"/>
-<via x="46.2534" y="15.2654" extent="1-16" drill="0.3556"/>
+<via x="46.2534" y="15.2654" extent="1-16" drill="0.381"/>
 <wire x1="56.5554" y1="22.4536" x2="57.5056" y2="22.4536" width="0.4064" layer="1"/>
-<via x="57.5056" y="22.4536" extent="1-16" drill="0.3556"/>
+<via x="57.5056" y="22.4536" extent="1-16" drill="0.381"/>
 <wire x1="45.72" y1="29.21" x2="45.3026" y2="29.7578" width="0.254" layer="1"/>
 <wire x1="45.72" y1="27.94" x2="45.3026" y2="27.9078" width="0.254" layer="1"/>
 <wire x1="45.72" y1="26.67" x2="45.3026" y2="26.7078" width="0.254" layer="1"/>
 <wire x1="45.72" y1="15.24" x2="45.3026" y2="15.2578" width="0.254" layer="1"/>
 <wire x1="30.769" y1="27.9146" x2="30.769" y2="28.6162" width="0.4064" layer="1"/>
 <wire x1="30.769" y1="28.6162" x2="30.7594" y2="28.6258" width="0.4064" layer="1"/>
-<via x="30.7594" y="28.6258" extent="1-16" drill="0.3556"/>
+<via x="30.7594" y="28.6258" extent="1-16" drill="0.381"/>
 <wire x1="30.7594" y1="28.6258" x2="30.7848" y2="28.8036" width="0.4064" layer="16"/>
 <wire x1="30.769" y1="23.0886" x2="30.7848" y2="23.0886" width="0.4064" layer="1"/>
 <wire x1="30.7848" y1="23.0886" x2="30.7848" y2="23.7998" width="0.4064" layer="1"/>
-<via x="30.7848" y="23.7998" extent="1-16" drill="0.3556"/>
+<via x="30.7848" y="23.7998" extent="1-16" drill="0.381"/>
 <wire x1="37.6526" y1="29.7578" x2="37.6682" y2="29.7578" width="0.4064" layer="1"/>
-<via x="37.6682" y="30.7086" extent="1-16" drill="0.3556"/>
+<via x="37.6682" y="30.7086" extent="1-16" drill="0.381"/>
 <wire x1="29.8292" y1="37.1094" x2="29.845" y2="37.1094" width="0.4064" layer="1"/>
 <wire x1="28.0416" y1="42.637" x2="28.0416" y2="43.4594" width="0.4064" layer="1"/>
-<via x="28.0416" y="43.4594" extent="1-16" drill="0.3556"/>
+<via x="28.0416" y="43.4594" extent="1-16" drill="0.381"/>
 <wire x1="30.0736" y1="41.1272" x2="30.0736" y2="42.164" width="0.4064" layer="1"/>
-<via x="30.0736" y="42.164" extent="1-16" drill="0.3556"/>
+<via x="30.0736" y="42.164" extent="1-16" drill="0.381"/>
 <wire x1="30.0736" y1="42.164" x2="30.0736" y2="42.1894" width="0.4064" layer="16"/>
-<via x="35.5854" y="44.7294" extent="1-16" drill="0.3556"/>
+<via x="35.5854" y="44.7294" extent="1-16" drill="0.381"/>
 <wire x1="52.48" y1="38.83" x2="50.2224" y2="38.83" width="0.4064" layer="1"/>
 <wire x1="50.2224" y1="38.83" x2="50.2158" y2="38.8366" width="0.4064" layer="1"/>
-<via x="50.2158" y="38.8366" extent="1-16" drill="0.3556"/>
+<via x="50.2158" y="38.8366" extent="1-16" drill="0.381"/>
 <wire x1="50.2158" y1="38.8366" x2="50.0888" y2="38.8366" width="0.4064" layer="16"/>
 <wire x1="50.0888" y1="38.8366" x2="50.0634" y2="38.862" width="0.4064" layer="16"/>
 <wire x1="54.29" y1="43.35" x2="55.3388" y2="43.35" width="0.4064" layer="1"/>
 <wire x1="55.3388" y1="43.35" x2="55.3466" y2="43.3578" width="0.4064" layer="1"/>
-<via x="55.3466" y="43.3578" extent="1-16" drill="0.3556"/>
+<via x="55.3466" y="43.3578" extent="1-16" drill="0.381"/>
 <wire x1="55.3466" y1="43.3578" x2="55.372" y2="43.3324" width="0.4064" layer="16"/>
 <wire x1="41.7212" y1="42.168" x2="42.3418" y2="42.168" width="0.3048" layer="1"/>
 <wire x1="42.3418" y1="42.168" x2="42.3418" y2="42.164" width="0.3048" layer="1"/>
-<via x="42.3418" y="42.164" extent="1-16" drill="0.3556"/>
+<via x="42.3418" y="42.164" extent="1-16" drill="0.381"/>
 <wire x1="42.3418" y1="42.164" x2="42.418" y2="42.164" width="0.3048" layer="16"/>
 <wire x1="36.6364" y1="44.7294" x2="35.5854" y2="44.7294" width="0.3048" layer="1"/>
-<via x="33.6042" y="30.7086" extent="1-16" drill="0.3556"/>
-<via x="35.2552" y="30.7086" extent="1-16" drill="0.3556"/>
+<via x="33.6042" y="30.7086" extent="1-16" drill="0.381"/>
+<via x="35.2552" y="30.7086" extent="1-16" drill="0.381"/>
 <wire x1="35.2552" y1="30.7086" x2="35.2806" y2="30.9626" width="0.6096" layer="16"/>
-<via x="43.6626" y="30.6832" extent="1-16" drill="0.3556"/>
-<via x="45.2882" y="30.7086" extent="1-16" drill="0.3556"/>
-<via x="46.228" y="26.6954" extent="1-16" drill="0.3556"/>
-<via x="46.2534" y="27.9146" extent="1-16" drill="0.3556"/>
+<via x="43.6626" y="30.6832" extent="1-16" drill="0.381"/>
+<via x="45.2882" y="30.7086" extent="1-16" drill="0.381"/>
+<via x="46.228" y="26.6954" extent="1-16" drill="0.381"/>
+<via x="46.2534" y="27.9146" extent="1-16" drill="0.381"/>
 <wire x1="46.7614" y1="28.194" x2="46.8122" y2="28.2448" width="0.6096" layer="16"/>
 <wire x1="45.3026" y1="26.7078" x2="46.2156" y2="26.7078" width="0.6096" layer="1"/>
 <wire x1="46.2156" y1="26.7078" x2="46.228" y2="26.6954" width="0.6096" layer="1"/>
@@ -4273,17 +4269,17 @@ design rules under a new name.</description>
 <wire x1="35.2526" y1="30.706" x2="35.2552" y2="30.7086" width="0.6096" layer="1"/>
 <wire x1="33.6026" y1="29.7578" x2="33.6026" y2="30.707" width="0.6096" layer="1"/>
 <wire x1="33.6026" y1="30.707" x2="33.6042" y2="30.7086" width="0.6096" layer="1"/>
-<via x="32.6644" y="20.6756" extent="1-16" drill="0.3556"/>
+<via x="32.6644" y="20.6756" extent="1-16" drill="0.381"/>
 <wire x1="33.6026" y1="20.7078" x2="32.6966" y2="20.7078" width="0.6096" layer="1"/>
 <wire x1="32.6966" y1="20.7078" x2="32.6644" y2="20.6756" width="0.6096" layer="1"/>
-<via x="32.6644" y="15.24" extent="1-16" drill="0.3556"/>
-<via x="36.576" y="17.6022" extent="1-16" drill="0.3556"/>
-<via x="37.9984" y="17.6022" extent="1-16" drill="0.3556"/>
-<via x="40.9194" y="17.6276" extent="1-16" drill="0.3556"/>
-<via x="42.3418" y="17.6022" extent="1-16" drill="0.3556"/>
-<via x="37.6428" y="14.3256" extent="1-16" drill="0.3556"/>
-<via x="38.862" y="14.3256" extent="1-16" drill="0.3556"/>
-<via x="40.0558" y="14.3256" extent="1-16" drill="0.3556"/>
+<via x="32.6644" y="15.24" extent="1-16" drill="0.381"/>
+<via x="36.576" y="17.6022" extent="1-16" drill="0.381"/>
+<via x="37.9984" y="17.6022" extent="1-16" drill="0.381"/>
+<via x="40.9194" y="17.6276" extent="1-16" drill="0.381"/>
+<via x="42.3418" y="17.6022" extent="1-16" drill="0.381"/>
+<via x="37.6428" y="14.3256" extent="1-16" drill="0.381"/>
+<via x="38.862" y="14.3256" extent="1-16" drill="0.381"/>
+<via x="40.0558" y="14.3256" extent="1-16" drill="0.381"/>
 <wire x1="37.6526" y1="15.2578" x2="37.6526" y2="14.3354" width="0.6096" layer="1"/>
 <wire x1="37.6526" y1="14.3354" x2="37.6428" y2="14.3256" width="0.6096" layer="1"/>
 <wire x1="38.8526" y1="15.2578" x2="38.8526" y2="14.335" width="0.6096" layer="1"/>
@@ -4298,145 +4294,145 @@ design rules under a new name.</description>
 <wire x1="42.3418" y1="18.9078" x2="42.3418" y2="17.6022" width="0.6096" layer="1"/>
 <wire x1="37.3026" y1="18.9078" x2="36.6014" y2="18.9078" width="0.6096" layer="1"/>
 <wire x1="36.6014" y1="18.9078" x2="36.6014" y2="17.6022" width="0.6096" layer="1"/>
-<via x="44.196" y="17.0688" extent="1-16" drill="0.3556"/>
+<via x="44.196" y="17.0688" extent="1-16" drill="0.381"/>
 <wire x1="45.3026" y1="17.1078" x2="44.3484" y2="17.1078" width="0.6096" layer="1"/>
 <wire x1="44.3484" y1="17.1078" x2="44.196" y2="17.0688" width="0.6096" layer="1"/>
-<via x="34.544" y="25.5016" extent="1-16" drill="0.3556"/>
-<via x="34.544" y="24.3078" extent="1-16" drill="0.3556"/>
+<via x="34.544" y="25.5016" extent="1-16" drill="0.381"/>
+<via x="34.544" y="24.3078" extent="1-16" drill="0.381"/>
 <wire x1="34.544" y1="25.5016" x2="33.5534" y2="25.5016" width="0.6096" layer="1"/>
 <wire x1="34.544" y1="24.3078" x2="33.6042" y2="24.3078" width="0.6096" layer="1"/>
-<via x="34.544" y="20.701" extent="1-16" drill="0.3556"/>
+<via x="34.544" y="20.701" extent="1-16" drill="0.381"/>
 <wire x1="34.544" y1="20.701" x2="33.8582" y2="20.701" width="0.6096" layer="1"/>
 <wire x1="32.6644" y1="15.24" x2="33.6026" y2="15.24" width="0.6096" layer="1"/>
 <wire x1="33.6026" y1="15.24" x2="33.6026" y2="15.2578" width="0.6096" layer="1"/>
 <wire x1="45.3136" y1="15.2654" x2="43.688" y2="15.2654" width="0.6096" layer="1"/>
-<via x="45.2882" y="14.3256" extent="1-16" drill="0.3556"/>
+<via x="45.2882" y="14.3256" extent="1-16" drill="0.381"/>
 <wire x1="45.2882" y1="14.3256" x2="45.3136" y2="14.3256" width="0.6096" layer="1"/>
 <wire x1="45.3136" y1="14.3256" x2="45.3136" y2="15.1384" width="0.6096" layer="1"/>
-<via x="46.3804" y="16.4338" extent="1-16" drill="0.3556"/>
+<via x="46.3804" y="16.4338" extent="1-16" drill="0.381"/>
 <wire x1="46.3804" y1="16.4338" x2="45.3136" y2="17.0942" width="0.6096" layer="1"/>
-<via x="41.2496" y="16.1798" extent="1-16" drill="0.3556"/>
+<via x="41.2496" y="16.1798" extent="1-16" drill="0.381"/>
 <wire x1="41.2496" y1="16.1798" x2="41.2496" y2="15.3162" width="0.6096" layer="1"/>
-<via x="34.544" y="26.6954" extent="1-16" drill="0.3556"/>
-<via x="36.2966" y="33.0708" extent="1-16" drill="0.3556"/>
-<via x="34.671" y="32.1818" extent="1-16" drill="0.3556"/>
-<via x="32.2072" y="33.9598" extent="1-16" drill="0.3556"/>
-<via x="29.9974" y="36.0934" extent="1-16" drill="0.3556"/>
-<via x="29.2862" y="32.8168" extent="1-16" drill="0.3556"/>
-<via x="27.6098" y="35.3314" extent="1-16" drill="0.3556"/>
-<via x="27.7114" y="30.3022" extent="1-16" drill="0.3556"/>
-<via x="30.5308" y="26.2382" extent="1-16" drill="0.3556"/>
-<via x="27.3812" y="26.0858" extent="1-16" drill="0.3556"/>
-<via x="27.4066" y="23.2918" extent="1-16" drill="0.3556"/>
-<via x="27.8892" y="19.05" extent="1-16" drill="0.3556"/>
-<via x="28.067" y="8.8646" extent="1-16" drill="0.3556"/>
-<via x="28.0162" y="16.764" extent="1-16" drill="0.3556"/>
-<via x="33.5788" y="14.3256" extent="1-16" drill="0.3556"/>
-<via x="36.5252" y="21.209" extent="1-16" drill="0.3556"/>
-<via x="38.0492" y="21.209" extent="1-16" drill="0.3556"/>
-<via x="40.8686" y="21.209" extent="1-16" drill="0.3556"/>
-<via x="42.3672" y="21.209" extent="1-16" drill="0.3556"/>
-<via x="42.3926" y="24.7904" extent="1-16" drill="0.3556"/>
-<via x="40.894" y="24.7904" extent="1-16" drill="0.3556"/>
-<via x="38.0492" y="24.8158" extent="1-16" drill="0.3556"/>
-<via x="36.6014" y="24.8158" extent="1-16" drill="0.3556"/>
-<via x="43.6372" y="28.829" extent="1-16" drill="0.3556"/>
-<via x="44.3738" y="27.9146" extent="1-16" drill="0.3556"/>
-<via x="44.3738" y="26.67" extent="1-16" drill="0.3556"/>
-<via x="43.7388" y="25.0444" extent="1-16" drill="0.3556"/>
-<via x="43.7134" y="22.6314" extent="1-16" drill="0.3556"/>
-<via x="43.6626" y="20.1422" extent="1-16" drill="0.3556"/>
-<via x="41.6052" y="28.1178" extent="1-16" drill="0.3556"/>
-<via x="39.497" y="28.1178" extent="1-16" drill="0.3556"/>
-<via x="37.1348" y="28.067" extent="1-16" drill="0.3556"/>
-<via x="35.2044" y="18.8722" extent="1-16" drill="0.3556"/>
-<via x="46.2788" y="29.7688" extent="1-16" drill="0.3556"/>
-<via x="35.3822" y="28.067" extent="1-16" drill="0.3556"/>
-<via x="35.1282" y="22.5298" extent="1-16" drill="0.3556"/>
-<via x="35.1282" y="16.9418" extent="1-16" drill="0.3556"/>
-<via x="37.6428" y="16.1798" extent="1-16" drill="0.3556"/>
-<via x="38.862" y="16.1798" extent="1-16" drill="0.3556"/>
-<via x="40.0558" y="16.1798" extent="1-16" drill="0.3556"/>
-<via x="28.321" y="13.1826" extent="1-16" drill="0.3556"/>
-<via x="30.5562" y="14.9098" extent="1-16" drill="0.3556"/>
-<via x="30.8356" y="10.922" extent="1-16" drill="0.3556"/>
-<via x="32.4866" y="12.7254" extent="1-16" drill="0.3556"/>
-<via x="34.4424" y="8.255" extent="1-16" drill="0.3556"/>
-<via x="35.941" y="10.3124" extent="1-16" drill="0.3556"/>
-<via x="38.4302" y="12.7254" extent="1-16" drill="0.3556"/>
-<via x="42.4434" y="16.4084" extent="1-16" drill="0.3556"/>
-<via x="41.5544" y="14.0208" extent="1-16" drill="0.3556"/>
-<via x="43.6626" y="16.2052" extent="1-16" drill="0.3556"/>
-<via x="43.3578" y="14.0208" extent="1-16" drill="0.3556"/>
-<via x="41.6052" y="12.7508" extent="1-16" drill="0.3556"/>
-<via x="42.291" y="11.6332" extent="1-16" drill="0.3556"/>
-<via x="43.6372" y="12.9032" extent="1-16" drill="0.3556"/>
-<via x="43.5102" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="46.4058" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="44.958" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="44.9834" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="46.4058" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="42.758359375" y="34.156396875" extent="1-16" drill="0.3556"/>
-<via x="39.071296875" y="8.63168125" extent="1-16" drill="0.3556"/>
-<via x="44.755309375" y="8.304275" extent="1-16" drill="0.3556"/>
-<via x="50.6275375" y="8.5018875" extent="1-16" drill="0.3556"/>
-<via x="56.5490375" y="8.5018875" extent="1-16" drill="0.3556"/>
-<via x="61.779659375" y="8.5018875" extent="1-16" drill="0.3556"/>
-<via x="70.168515625" y="8.5018875" extent="1-16" drill="0.3556"/>
-<via x="74.510896875" y="8.79805" extent="1-16" drill="0.3556"/>
-<via x="47.9552" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="47.9044" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="49.4792" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="49.4538" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="51.1302" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="51.1048" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="52.7558" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="52.7304" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="58.039" y="10.9982" extent="1-16" drill="0.3556"/>
-<via x="57.785" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="59.817" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="59.7916" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="55.9816" y="10.9982" extent="1-16" drill="0.3556"/>
-<via x="56.1594" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="54.356" y="10.9728" extent="1-16" drill="0.3556"/>
-<via x="54.102" y="12.8016" extent="1-16" drill="0.3556"/>
-<via x="61.5188" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="61.4934" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="63.119" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="63.119" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="64.8208" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="64.7954" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="66.6242" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="66.6242" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="68.5038" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="68.453" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="70.358" y="12.827" extent="1-16" drill="0.3556"/>
-<via x="70.358" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="72.39" y="12.9032" extent="1-16" drill="0.3556"/>
-<via x="72.0852" y="11.0236" extent="1-16" drill="0.3556"/>
-<via x="73.025" y="14.4272" extent="1-16" drill="0.3556"/>
-<via x="73.688196875" y="11.51535625" extent="1-16" drill="0.3556"/>
-<via x="74.6506" y="12.7254" extent="1-16" drill="0.3556"/>
-<via x="74.8538" y="14.4272" extent="1-16" drill="0.3556"/>
-<via x="71.6788" y="14.4272" extent="1-16" drill="0.3556"/>
-<via x="70.0786" y="14.4272" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="14.4272" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="16.002" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="17.6022" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="19.2024" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="20.768065625" extent="1-16" drill="0.3556"/>
-<via x="65.475103125" y="21.796003125" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="22.606" extent="1-16" drill="0.3556"/>
-<via x="64.881759375" y="18.451584375" extent="1-16" drill="0.3556"/>
-<via x="61.8957375" y="15.524740625" extent="1-16" drill="0.3556"/>
-<via x="65.66255625" y="15.361165625" extent="1-16" drill="0.3556"/>
-<via x="62.034165625" y="22.114515625" extent="1-16" drill="0.3556"/>
-<via x="58.247278125" y="18.475459375" extent="1-16" drill="0.3556"/>
-<via x="53.643275" y="17.862303125" extent="1-16" drill="0.3556"/>
-<via x="50.38928125" y="15.5656375" extent="1-16" drill="0.3556"/>
-<via x="48.299875" y="28.934675" extent="1-16" drill="0.3556"/>
-<via x="49.70449375" y="27.083778125" extent="1-16" drill="0.3556"/>
-<via x="52.444390625" y="25.9524625" extent="1-16" drill="0.3556"/>
+<via x="34.544" y="26.6954" extent="1-16" drill="0.381"/>
+<via x="36.2966" y="33.0708" extent="1-16" drill="0.381"/>
+<via x="34.671" y="32.1818" extent="1-16" drill="0.381"/>
+<via x="32.2072" y="33.9598" extent="1-16" drill="0.381"/>
+<via x="29.9974" y="36.0934" extent="1-16" drill="0.381"/>
+<via x="29.2862" y="32.8168" extent="1-16" drill="0.381"/>
+<via x="27.6098" y="35.3314" extent="1-16" drill="0.381"/>
+<via x="27.7114" y="30.3022" extent="1-16" drill="0.381"/>
+<via x="30.5308" y="26.2382" extent="1-16" drill="0.381"/>
+<via x="27.3812" y="26.0858" extent="1-16" drill="0.381"/>
+<via x="27.4066" y="23.2918" extent="1-16" drill="0.381"/>
+<via x="27.8892" y="19.05" extent="1-16" drill="0.381"/>
+<via x="28.067" y="8.8646" extent="1-16" drill="0.381"/>
+<via x="28.0162" y="16.764" extent="1-16" drill="0.381"/>
+<via x="33.5788" y="14.3256" extent="1-16" drill="0.381"/>
+<via x="36.5252" y="21.209" extent="1-16" drill="0.381"/>
+<via x="38.0492" y="21.209" extent="1-16" drill="0.381"/>
+<via x="40.8686" y="21.209" extent="1-16" drill="0.381"/>
+<via x="42.3672" y="21.209" extent="1-16" drill="0.381"/>
+<via x="42.3926" y="24.7904" extent="1-16" drill="0.381"/>
+<via x="40.894" y="24.7904" extent="1-16" drill="0.381"/>
+<via x="38.0492" y="24.8158" extent="1-16" drill="0.381"/>
+<via x="36.6014" y="24.8158" extent="1-16" drill="0.381"/>
+<via x="43.6372" y="28.829" extent="1-16" drill="0.381"/>
+<via x="44.3738" y="27.9146" extent="1-16" drill="0.381"/>
+<via x="44.3738" y="26.67" extent="1-16" drill="0.381"/>
+<via x="43.7388" y="25.0444" extent="1-16" drill="0.381"/>
+<via x="43.7134" y="22.6314" extent="1-16" drill="0.381"/>
+<via x="43.6626" y="20.1422" extent="1-16" drill="0.381"/>
+<via x="41.6052" y="28.1178" extent="1-16" drill="0.381"/>
+<via x="39.497" y="28.1178" extent="1-16" drill="0.381"/>
+<via x="37.1348" y="28.067" extent="1-16" drill="0.381"/>
+<via x="35.2044" y="18.8722" extent="1-16" drill="0.381"/>
+<via x="46.2788" y="29.7688" extent="1-16" drill="0.381"/>
+<via x="35.3822" y="28.067" extent="1-16" drill="0.381"/>
+<via x="35.1282" y="22.5298" extent="1-16" drill="0.381"/>
+<via x="35.1282" y="16.9418" extent="1-16" drill="0.381"/>
+<via x="37.6428" y="16.1798" extent="1-16" drill="0.381"/>
+<via x="38.862" y="16.1798" extent="1-16" drill="0.381"/>
+<via x="40.0558" y="16.1798" extent="1-16" drill="0.381"/>
+<via x="28.321" y="13.1826" extent="1-16" drill="0.381"/>
+<via x="30.5562" y="14.9098" extent="1-16" drill="0.381"/>
+<via x="30.8356" y="10.922" extent="1-16" drill="0.381"/>
+<via x="32.4866" y="12.7254" extent="1-16" drill="0.381"/>
+<via x="34.4424" y="8.255" extent="1-16" drill="0.381"/>
+<via x="35.941" y="10.3124" extent="1-16" drill="0.381"/>
+<via x="38.4302" y="12.7254" extent="1-16" drill="0.381"/>
+<via x="42.4434" y="16.4084" extent="1-16" drill="0.381"/>
+<via x="41.529" y="13.9954" extent="1-16" drill="0.381"/>
+<via x="43.6626" y="16.2052" extent="1-16" drill="0.381"/>
+<via x="43.3832" y="13.9954" extent="1-16" drill="0.381"/>
+<via x="41.6052" y="12.7" extent="1-16" drill="0.381"/>
+<via x="42.291" y="11.5824" extent="1-16" drill="0.381"/>
+<via x="43.6372" y="12.9286" extent="1-16" drill="0.381"/>
+<via x="43.5102" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="46.4058" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="44.958" y="12.827" extent="1-16" drill="0.381"/>
+<via x="44.9834" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="46.4058" y="12.827" extent="1-16" drill="0.381"/>
+<via x="42.758359375" y="34.156396875" extent="1-16" drill="0.381"/>
+<via x="39.071296875" y="8.63168125" extent="1-16" drill="0.381"/>
+<via x="44.755309375" y="8.304275" extent="1-16" drill="0.381"/>
+<via x="50.6275375" y="8.5018875" extent="1-16" drill="0.381"/>
+<via x="56.5490375" y="8.5018875" extent="1-16" drill="0.381"/>
+<via x="61.779659375" y="8.5018875" extent="1-16" drill="0.381"/>
+<via x="70.168515625" y="8.5018875" extent="1-16" drill="0.381"/>
+<via x="74.510896875" y="8.79805" extent="1-16" drill="0.381"/>
+<via x="47.9552" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="47.9044" y="12.827" extent="1-16" drill="0.381"/>
+<via x="49.4792" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="49.4538" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="51.1302" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="51.1048" y="12.827" extent="1-16" drill="0.381"/>
+<via x="52.7558" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="52.7304" y="12.827" extent="1-16" drill="0.381"/>
+<via x="58.039" y="10.9728" extent="1-16" drill="0.381"/>
+<via x="57.7596" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="59.8424" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="59.7916" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="55.9562" y="10.9728" extent="1-16" drill="0.381"/>
+<via x="56.1594" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="54.356" y="10.9474" extent="1-16" drill="0.381"/>
+<via x="54.102" y="12.827" extent="1-16" drill="0.381"/>
+<via x="61.5442" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="61.4934" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="63.1444" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="63.119" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="64.8462" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="64.7954" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="66.6496" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="66.6242" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="68.5292" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="68.453" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="70.3834" y="12.8524" extent="1-16" drill="0.381"/>
+<via x="70.358" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="72.3646" y="12.9286" extent="1-16" drill="0.381"/>
+<via x="72.0852" y="10.9982" extent="1-16" drill="0.381"/>
+<via x="72.9996" y="14.4018" extent="1-16" drill="0.381"/>
+<via x="73.713596875" y="11.48995625" extent="1-16" drill="0.381"/>
+<via x="74.676" y="12.7" extent="1-16" drill="0.381"/>
+<via x="74.8792" y="14.4018" extent="1-16" drill="0.381"/>
+<via x="71.6788" y="14.4018" extent="1-16" drill="0.381"/>
+<via x="70.0786" y="14.4018" extent="1-16" drill="0.381"/>
+<via x="68.4022" y="14.4272" extent="1-16" drill="0.381"/>
+<via x="68.3514" y="16.002" extent="1-16" drill="0.381"/>
+<via x="68.3514" y="17.6022" extent="1-16" drill="0.381"/>
+<via x="68.3514" y="19.2024" extent="1-16" drill="0.381"/>
+<via x="68.3514" y="20.920465625" extent="1-16" drill="0.381"/>
+<via x="65.475103125" y="21.796003125" extent="1-16" drill="0.381"/>
+<via x="68.3514" y="22.7584" extent="1-16" drill="0.381"/>
+<via x="64.881759375" y="18.451584375" extent="1-16" drill="0.381"/>
+<via x="61.8957375" y="15.524740625" extent="1-16" drill="0.381"/>
+<via x="65.66255625" y="15.361165625" extent="1-16" drill="0.381"/>
+<via x="62.034165625" y="22.114515625" extent="1-16" drill="0.381"/>
+<via x="58.247278125" y="18.475459375" extent="1-16" drill="0.381"/>
+<via x="53.643275" y="17.862303125" extent="1-16" drill="0.381"/>
+<via x="50.38928125" y="15.5656375" extent="1-16" drill="0.381"/>
+<via x="48.299875" y="28.934675" extent="1-16" drill="0.381"/>
+<via x="49.70449375" y="27.083778125" extent="1-16" drill="0.381"/>
+<via x="52.444390625" y="25.9524625" extent="1-16" drill="0.381"/>
 <wire x1="29.8292" y1="37.1094" x2="29.8292" y2="36.2616" width="0.6096" layer="1"/>
 <wire x1="29.8292" y1="36.2616" x2="29.9974" y2="36.0934" width="0.6096" layer="1"/>
 <polygon width="0.6096" layer="1" thermals="no">
@@ -4457,12 +4453,12 @@ design rules under a new name.</description>
 <vertex x="75.3618" y="6.985"/>
 <vertex x="26.67" y="6.985"/>
 </polygon>
-<via x="68.4022" y="24.3332" extent="1-16" drill="0.3556"/>
-<via x="68.4022" y="26.0096" extent="1-16" drill="0.3556"/>
-<via x="69.977" y="26.220175" extent="1-16" drill="0.3556"/>
-<via x="71.7042" y="26.220175" extent="1-16" drill="0.3556"/>
-<via x="73.3298" y="26.220175" extent="1-16" drill="0.3556"/>
-<via x="74.9554" y="26.220175" extent="1-16" drill="0.3556"/>
+<via x="68.3514" y="24.4856" extent="1-16" drill="0.381"/>
+<via x="68.4022" y="26.0096" extent="1-16" drill="0.381"/>
+<via x="69.977" y="26.245575" extent="1-16" drill="0.381"/>
+<via x="71.7042" y="26.245575" extent="1-16" drill="0.381"/>
+<via x="73.3298" y="26.245575" extent="1-16" drill="0.381"/>
+<via x="74.9554" y="26.245575" extent="1-16" drill="0.381"/>
 <polygon width="0.4064" layer="16" isolate="0.3048" rank="2">
 <vertex x="0.8382" y="52.5018"/>
 <vertex x="64.135" y="52.5018"/>
@@ -4477,6 +4473,10 @@ design rules under a new name.</description>
 <vertex x="69.215" y="0.8382"/>
 <vertex x="0.8382" y="0.8382"/>
 </polygon>
+<via x="66.04" y="7.62" extent="1-16" drill="3.175"/>
+<via x="66.04" y="35.56" extent="1-16" drill="3.175"/>
+<via x="15.24" y="50.8" extent="1-16" drill="3.175"/>
+<via x="13.97" y="2.54" extent="1-16" drill="3.175"/>
 </signal>
 <signal name="N$1">
 <contactref element="U1" pad="P$7"/>
@@ -4612,9 +4612,9 @@ design rules under a new name.</description>
 <contactref element="U1" pad="P$26"/>
 <wire x1="33.6026" y1="19.5078" x2="30.6318" y2="19.5078" width="0.4064" layer="1"/>
 <wire x1="36.2204" y1="36.322" x2="37.1672" y2="36.322" width="0.3048" layer="1"/>
-<via x="36.2204" y="36.322" extent="1-16" drill="0.3556"/>
+<via x="36.2204" y="36.322" extent="1-16" drill="0.381"/>
 <wire x1="36.2204" y1="36.322" x2="29.0322" y2="29.1338" width="0.4064" layer="16"/>
-<via x="30.6318" y="19.5078" extent="1-16" drill="0.3556"/>
+<via x="30.6318" y="19.5078" extent="1-16" drill="0.381"/>
 <wire x1="30.6318" y1="19.5078" x2="30.581" y2="19.5078" width="0.4064" layer="16"/>
 <wire x1="30.581" y1="19.5078" x2="29.0322" y2="21.0566" width="0.4064" layer="16"/>
 <wire x1="29.0322" y1="21.0566" x2="29.0322" y2="29.1338" width="0.4064" layer="16"/>
@@ -4662,7 +4662,7 @@ design rules under a new name.</description>
 <wire x1="41.656" y1="44.0944" x2="41.0718" y2="43.5102" width="0.3048" layer="1"/>
 <wire x1="41.0718" y1="43.5102" x2="41.0718" y2="42.1686" width="0.3048" layer="1"/>
 <wire x1="41.0718" y1="42.1686" x2="41.0712" y2="42.168" width="0.3048" layer="1"/>
-<via x="41.656" y="44.0944" extent="1-16" drill="0.3556"/>
+<via x="41.656" y="44.0944" extent="1-16" drill="0.381"/>
 </signal>
 <signal name="SPI_CLK_HOST">
 <contactref element="J1" pad="3"/>
@@ -4698,7 +4698,7 @@ design rules under a new name.</description>
 <wire x1="37.1712" y1="42.168" x2="37.1712" y2="42.7626" width="0.3048" layer="1"/>
 <wire x1="37.1712" y1="42.7626" x2="36.576" y2="43.3578" width="0.3048" layer="1"/>
 <wire x1="36.576" y1="43.3578" x2="36.576" y2="50.8" width="0.3048" layer="16"/>
-<via x="36.576" y="43.3578" extent="1-16" drill="0.3556"/>
+<via x="36.576" y="43.3578" extent="1-16" drill="0.381"/>
 </signal>
 <signal name="N$15">
 <contactref element="C2" pad="1"/>
@@ -4716,14 +4716,14 @@ design rules under a new name.</description>
 <wire x1="39.7712" y1="42.168" x2="39.7712" y2="43.7948" width="0.3048" layer="1"/>
 <wire x1="39.7712" y1="43.7948" x2="39.116" y2="44.45" width="0.3048" layer="16"/>
 <wire x1="39.116" y1="44.45" x2="39.116" y2="50.8" width="0.3048" layer="16"/>
-<via x="39.7712" y="43.7948" extent="1-16" drill="0.3556"/>
+<via x="39.7712" y="43.7948" extent="1-16" drill="0.381"/>
 </signal>
 <signal name="N$17">
 <contactref element="R3" pad="1"/>
 <contactref element="U2" pad="D7"/>
 <wire x1="45.72" y1="50.8" x2="45.6946" y2="50.8" width="0.4064" layer="16"/>
 <wire x1="45.6946" y1="50.8" x2="45.6946" y2="45.974" width="0.4064" layer="16"/>
-<via x="45.6946" y="45.974" extent="1-16" drill="0.3556"/>
+<via x="45.6946" y="45.974" extent="1-16" drill="0.381"/>
 <wire x1="45.6946" y1="45.974" x2="45.72" y2="45.974" width="0.4064" layer="1"/>
 <wire x1="45.72" y1="45.974" x2="45.72" y2="44.6936" width="0.4064" layer="1"/>
 </signal>
@@ -4739,7 +4739,7 @@ design rules under a new name.</description>
 <contactref element="R5" pad="1"/>
 <contactref element="U2" pad="D6"/>
 <wire x1="48.26" y1="44.6428" x2="48.26" y2="45.8978" width="0.4064" layer="1"/>
-<via x="48.26" y="45.8978" extent="1-16" drill="0.3556"/>
+<via x="48.26" y="45.8978" extent="1-16" drill="0.381"/>
 <wire x1="48.26" y1="45.8978" x2="48.26" y2="50.8" width="0.4064" layer="16"/>
 </signal>
 <signal name="N$21">
@@ -4786,7 +4786,9 @@ design rules under a new name.</description>
 </polygon>
 <wire x1="28.0416" y1="41.437" x2="29.1236" y2="41.437" width="0.4064" layer="1"/>
 <wire x1="29.1236" y1="41.437" x2="29.1236" y2="41.1272" width="0.4064" layer="1"/>
-<wire x1="37.8364" y1="44.7294" x2="37.8212" y2="42.168" width="0" layer="19" extent="1-1"/>
+<wire x1="37.8212" y1="42.168" x2="37.8206" y2="42.168" width="0.3048" layer="1"/>
+<wire x1="37.8206" y1="42.168" x2="37.8206" y2="43.561" width="0.3048" layer="1"/>
+<wire x1="37.8206" y1="43.561" x2="37.8364" y2="44.7294" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="VIN">
 <contactref element="U2" pad="VIN"/>

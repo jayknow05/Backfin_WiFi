@@ -11759,22 +11759,22 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 <text x="-7.112" y="-6.604" size="1.27" layer="94">&gt;Value</text>
 </symbol>
 <symbol name="TXB0106">
-<pin name="A1" x="-22.86" y="15.24" length="middle"/>
-<pin name="VCCA" x="-22.86" y="12.7" length="middle"/>
-<pin name="A2" x="-22.86" y="10.16" length="middle"/>
-<pin name="A3" x="-22.86" y="7.62" length="middle"/>
-<pin name="A4" x="-22.86" y="5.08" length="middle"/>
-<pin name="A5" x="-22.86" y="2.54" length="middle"/>
-<pin name="A6" x="-22.86" y="0" length="middle"/>
-<pin name="OE" x="-22.86" y="-2.54" length="middle"/>
-<pin name="GND" x="7.62" y="-2.54" length="middle" rot="R180"/>
-<pin name="B6" x="7.62" y="0" length="middle" rot="R180"/>
-<pin name="B5" x="7.62" y="2.54" length="middle" rot="R180"/>
-<pin name="B4" x="7.62" y="5.08" length="middle" rot="R180"/>
-<pin name="B3" x="7.62" y="7.62" length="middle" rot="R180"/>
-<pin name="B2" x="7.62" y="10.16" length="middle" rot="R180"/>
-<pin name="VCCB" x="7.62" y="12.7" length="middle" rot="R180"/>
-<pin name="B1" x="7.62" y="15.24" length="middle" rot="R180"/>
+<pin name="A1" x="-22.86" y="15.24" length="middle" swaplevel="1"/>
+<pin name="VCCA" x="-22.86" y="12.7" length="middle" direction="pwr"/>
+<pin name="A2" x="-22.86" y="10.16" length="middle" swaplevel="1"/>
+<pin name="A3" x="-22.86" y="7.62" length="middle" swaplevel="1"/>
+<pin name="A4" x="-22.86" y="5.08" length="middle" swaplevel="1"/>
+<pin name="A5" x="-22.86" y="2.54" length="middle" swaplevel="1"/>
+<pin name="A6" x="-22.86" y="0" length="middle" swaplevel="1"/>
+<pin name="OE" x="-22.86" y="-2.54" length="middle" direction="in"/>
+<pin name="GND" x="7.62" y="-2.54" length="middle" direction="pwr" rot="R180"/>
+<pin name="B6" x="7.62" y="0" length="middle" swaplevel="1" rot="R180"/>
+<pin name="B5" x="7.62" y="2.54" length="middle" swaplevel="1" rot="R180"/>
+<pin name="B4" x="7.62" y="5.08" length="middle" swaplevel="1" rot="R180"/>
+<pin name="B3" x="7.62" y="7.62" length="middle" swaplevel="1" rot="R180"/>
+<pin name="B2" x="7.62" y="10.16" length="middle" swaplevel="1" rot="R180"/>
+<pin name="VCCB" x="7.62" y="12.7" length="middle" direction="pwr" rot="R180"/>
+<pin name="B1" x="7.62" y="15.24" length="middle" swaplevel="1" rot="R180"/>
 <wire x1="-17.78" y1="17.78" x2="-17.78" y2="-5.08" width="0.254" layer="94"/>
 <wire x1="-17.78" y1="-5.08" x2="2.54" y2="-5.08" width="0.254" layer="94"/>
 <wire x1="2.54" y1="-5.08" x2="2.54" y2="17.78" width="0.254" layer="94"/>
@@ -12695,11 +12695,11 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </net>
 <net name="VBAT_SW_EN" class="0">
 <segment>
-<wire x1="116.84" y1="-43.18" x2="160.02" y2="-43.18" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="-58.42" x2="160.02" y2="-43.18" width="0.1524" layer="91"/>
 <label x="134.112" y="-42.926" size="1.778" layer="95"/>
 <wire x1="116.84" y1="5.08" x2="142.24" y2="5.08" width="0.1524" layer="91"/>
 <label x="118.364" y="5.334" size="1.778" layer="95"/>
-<pinref part="U$8" gate="G$1" pin="B1"/>
+<pinref part="U$8" gate="G$1" pin="B6"/>
 <pinref part="U$2" gate="G$1" pin="D8"/>
 </segment>
 </net>
@@ -12747,11 +12747,11 @@ Source: http://focus.ti.com/lit/ds/symlink/ads1271.pdf</description>
 </net>
 <net name="SPI_CS_HOST" class="0">
 <segment>
-<wire x1="116.84" y1="-58.42" x2="160.02" y2="-58.42" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="-43.18" x2="160.02" y2="-58.42" width="0.1524" layer="91"/>
 <label x="134.112" y="-58.166" size="1.778" layer="95"/>
 <wire x1="116.84" y1="0" x2="142.24" y2="0" width="0.1524" layer="91"/>
 <label x="118.364" y="0.254" size="1.778" layer="95"/>
-<pinref part="U$8" gate="G$1" pin="B6"/>
+<pinref part="U$8" gate="G$1" pin="B1"/>
 <pinref part="U$2" gate="G$1" pin="D10"/>
 </segment>
 </net>
