@@ -33,15 +33,7 @@
 #define 	eSPI_STATE_READ_FIRST_PORTION	 (7)
 #define 	eSPI_STATE_READ_EOT				 (8)
 
-
-
-////////////////////////////////
-
-//Set slave select pin
-//int SS = 10;
-
-//Set IRQ Pin
-#define CC3000_nIRQ 	(9)
+#define CC3000_nIRQ 	(3)
 #define HOST_nCS		(10)
 #define HOST_VBAT_SW_EN (8)
 
@@ -272,23 +264,60 @@ int test(void)
 
 long ReadWlanInterruptPin(void)
 {
-    // return(digitalRead(IRQ));
+    return(digitalRead(CC3000_nIRQ));
     // Need to add code for disable and enable
-    return 0;
 }
 
 
 void WlanInterruptEnable()
 {
-    //Engable IRQ
+    attachInterrupt(1, SPI_IRQ, LOW); //Attaches Pin 3 to interrupt 1
 }
 
 
 void WlanInterruptDisable()
 {
-    //Disable IRQ
+    detachInterrupt(1);	//Detaches Pin 3 from interrupt 1
 }
 
+void SPI_IRQ(void)
+{
+	if (sSpiInformation.ulSpiState == eSPI_STATE_POWERUP)
+	{
+		/* This means IRQ line was low call a callback of HCI Layer to inform on event */
+		sSpiInformation.ulSpiState = eSPI_STATE_INITIALIZED;
+	}
+	else if (sSpiInformation.ulSpiState == eSPI_STATE_IDLE)
+	{
+		sSpiInformation.ulSpiState = eSPI_STATE_READ_IRQ;
+			
+		/* IRQ line goes down - we are start reception */
+		digitalWrite(HOST_nCS, LOW);
+
+			//
+			// Wait for TX/RX Compete which will come as DMA interrupt
+			// 
+		//SpiReadHeader();
+
+		sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
+			
+			//
+			//
+			//
+		//SSIContReadOperation();
+	}
+	else if (sSpiInformation.ulSpiState == eSPI_STATE_WRITE_IRQ)
+	{
+		SpiWriteDataSynchronous(sSpiInformation.pTxPacket, sSpiInformation.usTxPacketLength);
+
+		sSpiInformation.ulSpiState = eSPI_STATE_IDLE;
+
+		digitalWrite(HOST_nCS, HIGH);
+	}
+
+	return;
+
+}
 
 void WriteWlanPin( unsigned char val )
 {

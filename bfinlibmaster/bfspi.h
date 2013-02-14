@@ -59,8 +59,7 @@ extern int init_spi(void);
 extern long TXBufferIsEmpty(void);
 extern long RXBufferIsEmpty(void);
 extern int test(void);
-
-
+extern void SPI_IRQ(void);
 
 extern void CC3000_UsynchCallback(long lEventType, char * data, unsigned char length);
 extern long ReadWlanInterruptPin(void);
