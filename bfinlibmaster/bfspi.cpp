@@ -36,6 +36,9 @@
 #define CC3000_nIRQ 	(3)
 #define HOST_nCS		(10)
 #define HOST_VBAT_SW_EN (8)
+#define LED 			(6)
+
+#define DEBUG_MODE		(1)
 
 
 //foor spi bus loop
@@ -67,7 +70,7 @@ tSpiInformation sSpiInformation;
 unsigned char tSpiReadHeader[] = {READ, 0, 0, 0, 0};
 
 
-char SpiWriteDataSynchronous(unsigned char *data, unsigned short size);
+void SpiWriteDataSynchronous(unsigned char *data, unsigned short size);
 void SpiWriteAsync(const unsigned char *data, unsigned short size);
 void SpiPauseSpi(void);
 void SpiResumeSpi(void);
@@ -125,6 +128,11 @@ unsigned char spi_buffer[CC3000_RX_BUFFER_SIZE];
 void
 SpiCleanGPIOISR(void)
 {
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiCleanGPIOISR");
+	}
+
 	//add code
 }
  
@@ -144,15 +152,20 @@ SpiCleanGPIOISR(void)
 void
 SpiClose(void)
 {
-	// if (sSpiInformation.pRxPacket)
-	// {
-	// 	sSpiInformation.pRxPacket = 0;
-	// }
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiClose");
+	}
+
+	if (sSpiInformation.pRxPacket)
+	{
+		sSpiInformation.pRxPacket = 0;
+	}
 
 	// //
 	// //	Disable Interrupt in GPIOA module...
 	// //
- //    tSLInformation.WlanInterruptDisable();
+	tSLInformation.WlanInterruptDisable();
 }
 
 
@@ -170,6 +183,12 @@ SpiClose(void)
 void 
 SpiOpen(gcSpiHandleRx pfRxHandler)
 {
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiOpen");
+	}
+
 	sSpiInformation.ulSpiState = eSPI_STATE_POWERUP;
 
 	sSpiInformation.SPIRxHandler = pfRxHandler;
@@ -203,15 +222,20 @@ SpiOpen(gcSpiHandleRx pfRxHandler)
 
 int init_spi(void)
 {
-
+	
+	if (DEBUG_MODE)
+	{
+		Serial.println("init_spi");
+	}
+	
     //set ss pin direction
    // pinMode(SS, OUTPUT);
 	pinMode(CC3000_nIRQ, INPUT);
     pinMode(HOST_nCS, OUTPUT);
     pinMode(HOST_VBAT_SW_EN, OUTPUT);
 
-    digitalWrite(HOST_VBAT_SW_EN, HIGH);
-    digitalWrite(HOST_nCS, HIGH);
+    // digitalWrite(HOST_VBAT_SW_EN, HIGH);
+    // digitalWrite(HOST_nCS, HIGH);
 
     Serial.println("Initializing SPI...");
     //Initialize SPI
@@ -232,163 +256,23 @@ int init_spi(void)
    	SPI.setClockDivider(SPI_CLOCK_DIV4);
    	sSpiInformation.ulSpiState = eSPI_STATE_INITIALIZED;
 
-    return(0);
+    return(ESUCCESS);
 }
 
-int test(void)
-{
-
-	Serial.println("Calling wlan_init");
-	wlan_init(CC3000_UsynchCallback, NULL, NULL, NULL, ReadWlanInterruptPin, WlanInterruptEnable, WlanInterruptDisable, WriteWlanPin);
-
-
-	Serial.println("Starting wlan...");
-	wlan_start(0);
-
- 
-	Serial.println("Attempting to connect...");
-	wlan_connect(WLAN_SEC_UNSEC,ssid,10, bssid, keys, 16);
-
-
-
-    return(0);
-}
-
-
-//*****************************************************************************
-//
-//! Returns state of IRQ pin
-//!
-//
-//*****************************************************************************
-
-long ReadWlanInterruptPin(void)
-{
-    return(digitalRead(CC3000_nIRQ));
-    // Need to add code for disable and enable
-}
-
-
-void WlanInterruptEnable()
-{
-    attachInterrupt(1, SPI_IRQ, LOW); //Attaches Pin 3 to interrupt 1
-}
-
-
-void WlanInterruptDisable()
-{
-    detachInterrupt(1);	//Detaches Pin 3 from interrupt 1
-}
-
-void SPI_IRQ(void)
-{
-	if (sSpiInformation.ulSpiState == eSPI_STATE_POWERUP)
-	{
-		/* This means IRQ line was low call a callback of HCI Layer to inform on event */
-		sSpiInformation.ulSpiState = eSPI_STATE_INITIALIZED;
-	}
-	else if (sSpiInformation.ulSpiState == eSPI_STATE_IDLE)
-	{
-		sSpiInformation.ulSpiState = eSPI_STATE_READ_IRQ;
-			
-		/* IRQ line goes down - we are start reception */
-		digitalWrite(HOST_nCS, LOW);
-
-			//
-			// Wait for TX/RX Compete which will come as DMA interrupt
-			// 
-		//SpiReadHeader();
-
-		sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
-			
-			//
-			//
-			//
-		//SSIContReadOperation();
-	}
-	else if (sSpiInformation.ulSpiState == eSPI_STATE_WRITE_IRQ)
-	{
-		SpiWriteDataSynchronous(sSpiInformation.pTxPacket, sSpiInformation.usTxPacketLength);
-
-		sSpiInformation.ulSpiState = eSPI_STATE_IDLE;
-
-		digitalWrite(HOST_nCS, HIGH);
-	}
-
-	return;
-
-}
-
-void WriteWlanPin( unsigned char val )
+long SpiFirstWrite(unsigned char *ucBuf, unsigned short usLength)
 {
     
-//add code
 
-}
-
-
-//*****************************************************************************
-//
-//  The function handles asynchronous events that come from CC3000 device 
-//!		  
-//
-//*****************************************************************************
-
-void CC3000_UsynchCallback(long lEventType, char * data, unsigned char length)
-{
-  
-  
-	// if (lEventType == HCI_EVNT_WLAN_ASYNC_SIMPLE_CONFIG_DONE)
-	// {
-	// 	//config complete
-	// }
-
-	// if (lEventType == HCI_EVNT_WLAN_UNSOL_CONNECT)
-	// {
-	// 	//connected
-	// }
-
-	// if (lEventType == HCI_EVNT_WLAN_UNSOL_DISCONNECT)
-	// {		
- //            //disconnected        
-	// }
-        
-	// if (lEventType == HCI_EVNT_WLAN_UNSOL_DHCP)
-	// {
- //             //dhcp
-	// }
-        
-	// if (lEventType == HCI_EVENT_CC3000_CAN_SHUT_DOWN)
-	// {
-	// 	//ready to shut down
-	// }
-
-}
-
-
-
-
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  buffer
-//!
-//!  \return none
-//!
-//!  \brief  ...
-//
-//*****************************************************************************
-long
-SpiFirstWrite(unsigned char *ucBuf, unsigned short usLength)
-{
-    
     // workaround for first transaction
     //
-    Serial.println("first write");
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiFirstWrite");
+	}
+
 
 	int sCC3000_nIRQ = digitalRead(CC3000_nIRQ);	
-	Serial.println("Waiting for CC3000_nIRQ to go low...");
+
    	while (sCC3000_nIRQ)
    	{
    		sCC3000_nIRQ = digitalRead(CC3000_nIRQ);
@@ -396,14 +280,11 @@ SpiFirstWrite(unsigned char *ucBuf, unsigned short usLength)
 
    	digitalWrite(HOST_nCS, LOW);
 
-  
-	
-    // Assuming we are running on 4 MHz ~50 micro delay is 1200 cycles;
-    delay(50);
+	delay(50);
 	
     // SPI writes first 4 bytes of data
     SpiWriteDataSynchronous(ucBuf, 4);
-
+    Serial.println("Done with first 4");
 
     delay(50);
 	
@@ -414,29 +295,23 @@ SpiFirstWrite(unsigned char *ucBuf, unsigned short usLength)
     
     
    	digitalWrite(HOST_nCS, HIGH);
-
+	
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiFirstWrite done.");
+	}
 
     return(0);
 }
 
-
-
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  buffer
-//!
-//!  \return none
-//!
-//!  \brief  ...
-//
-//*****************************************************************************
-long
-SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
+long SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 {
   
-    Serial.println("spi write");
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiWrite");
+	}
+
     
 
     unsigned char ucPad = 0;
@@ -474,9 +349,7 @@ SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 	if (sSpiInformation.ulSpiState == eSPI_STATE_POWERUP)
 	{
 		while (sSpiInformation.ulSpiState != eSPI_STATE_INITIALIZED)
-		{
-			init_spi();
-		}
+			;
 	}
 	
 	if (sSpiInformation.ulSpiState == eSPI_STATE_INITIALIZED)
@@ -490,7 +363,8 @@ SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 	else 
 	{
 
-		Serial.println("normal write");
+		tSLInformation.WlanInterruptDisable();
+
 		while (sSpiInformation.ulSpiState != eSPI_STATE_IDLE)
 		{
 			;
@@ -506,7 +380,7 @@ SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 
 		//Wait for CC to be ready
 		int sCC3000_nIRQ = digitalRead(CC3000_nIRQ);	
-		Serial.println("Waiting for CC3000_nIRQ to go low...");
+
   	 	while (sCC3000_nIRQ)
   	 	{
    			sCC3000_nIRQ = digitalRead(CC3000_nIRQ);
@@ -519,12 +393,13 @@ SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 
 
 		//Wait for CC to be ready
-
-   		while (!sCC3000_nIRQ)
-   		{
-   			sCC3000_nIRQ = digitalRead(CC3000_nIRQ);	
-			Serial.println("Waiting for CC3000_nIRQ to go high...");
-  	 	}
+		while (eSPI_STATE_IDLE != sSpiInformation.ulSpiState)
+			;
+   		//while (!sCC3000_nIRQ)
+   		//{
+   		//	sCC3000_nIRQ = digitalRead(CC3000_nIRQ);	
+		//	Serial.println("Waiting for CC3000_nIRQ to go high...");
+  	 	//}
 
 	}
 
@@ -532,54 +407,47 @@ SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
     return(0);
 }
 
- 
-
-
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  buffer
-//!
-//!  \return none
-//!
-//!  \brief  ...
-//
-//*****************************************************************************
-char
-SpiWriteDataSynchronous(unsigned char *data, unsigned short size)
+void SpiWriteDataSynchronous(unsigned char *data, unsigned short size)
 {
 
-	for (loc = 0; loc < size; loc++){
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiWriteDataSynchronous");
+	}
 
-
-		Serial.println(data[loc]); 
-
+	for (loc = 0; loc < size; loc++)
+	{
+		Serial.println(size);
+		Serial.println(loc);
+		if (DEBUG_MODE)
+		{
+			;//Serial.println(data[loc]); 
+		}
 		SPDR = data[loc];                    // Start the transmission
 	    while (!(SPSR & (1<<SPIF)))     // Wait the end of the transmission
-	    {
-	    };
+	    	Serial.println("Still Here!")
+	    	;
+	    
 	    //char result = SPDR;
 	}
 
-    //return result;    
-    return 0; 
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiWriteDataSynchronous done.");
+	}
+
+	return;
+
 }
 
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  buffer
-//!
-//!  \return none
-//!
-//!  \brief  ...
-//
-//*****************************************************************************
-void
-SpiReadDataSynchronous(unsigned char *data, unsigned short size)
+void SpiReadDataSynchronous(unsigned char *data, unsigned short size)
 {
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiReadDataSynchronous");
+	}
+
 	// long i = 0;
  //    unsigned char *data_to_send = tSpiReadHeader;
 	
@@ -593,42 +461,25 @@ SpiReadDataSynchronous(unsigned char *data, unsigned short size)
  //    }
 }
 
-
-
-//*****************************************************************************
-//
-//! This function enter point for read flow: first we read minimal 5 SPI header bytes and 5 Event
-//!	Data bytes
-//!
-//!  \param  buffer
-//!
-//!  \return none
-//!
-//!  \brief  ...
-//
-//*****************************************************************************
-void
-SpiReadHeader(void)
+void SpiReadHeader(void)
 {
-	// SpiReadDataSynchronous(sSpiInformation.pRxPacket, 10);
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiReadHeader");
+	}
+
+	SpiReadDataSynchronous(sSpiInformation.pRxPacket, 10);
+
 }
 
-
-//*****************************************************************************
-//
-//! This function processes received SPI Header and in accordance with it - continues reading 
-//!	the packet
-//!
-//!  \param  None
-//!
-//!  \return None
-//!
-//!  \brief  ...
-//
-//*****************************************************************************
-long
-SpiReadDataCont(void)
+long SpiReadDataCont(void)
 {
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiReadDataCont");
+	}
  //    long data_to_recv;
 	// unsigned char *evnt_buff, type;
 
@@ -689,60 +540,33 @@ SpiReadDataCont(void)
  //    return (0);
 }
 
-
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  SpiPauseSpi
-//!
-//!  \return none
-//!
-//!  \brief  The function triggers a user provided callback for 
-//
-//*****************************************************************************
-
-void 
-SpiPauseSpi(void)
+void SpiPauseSpi(void)
 {
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiPauseSpi");
+	}
 	// SPI_IRQ_PORT &= ~SPI_IRQ_PIN;
 }
 
-
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  SpiResumeSpi
-//!
-//!  \return none
-//!
-//!  \brief  The function triggers a user provided callback for 
-//
-//*****************************************************************************
-
-void 
-SpiResumeSpi(void)
+void SpiResumeSpi(void)
 {
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiResumeSpi");
+	}
 	// SPI_IRQ_PORT |= SPI_IRQ_PIN;
 }
 
-
-
-//*****************************************************************************
-//
-//! This function enter point for write flow
-//!
-//!  \param  SpiTriggerRxProcessing
-//!
-//!  \return none
-//!
-//!  \brief  The function triggers a user provided callback for 
-//
-//*****************************************************************************
-void 
-SpiTriggerRxProcessing(void)
+void SpiTriggerRxProcessing(void)
 {
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("SpiTriggerRxProcessing");
+	}
 	// //
 	// // Trigger Rx processing
 	// //
@@ -760,6 +584,222 @@ SpiTriggerRxProcessing(void)
 	
 	// sSpiInformation.ulSpiState = eSPI_STATE_IDLE;
 	// sSpiInformation.SPIRxHandler(sSpiInformation.pRxPacket + SPI_HEADER_SIZE);
+}
+
+int test(void)
+{
+
+	digitalWrite(LED, HIGH);
+	delay(200);
+	digitalWrite(LED, LOW);	
+	delay(200);
+	digitalWrite(LED, HIGH);
+	delay(200);
+	digitalWrite(LED, LOW);
+
+	init_spi();
+
+	Serial.println("Calling wlan_init");
+	wlan_init(CC3000_UsynchCallback, NULL, NULL, NULL, ReadWlanInterruptPin, WlanInterruptEnable, WlanInterruptDisable, WriteWlanPin);
+
+	Serial.println("Starting wlan...");
+	wlan_start(0);
+ 
+	Serial.println("Attempting to connect...");
+	wlan_connect(WLAN_SEC_UNSEC,ssid,10, bssid, keys, 16);
+
+	return(0);
+}
+
+
+//*****************************************************************************
+//
+//! Returns state of IRQ pin
+//!
+//
+//*****************************************************************************
+
+long ReadWlanInterruptPin(void)
+{
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("ReadWlanInterruptPin");
+		delay(50);
+	}
+
+	int IRQ;
+
+	IRQ = digitalRead(CC3000_nIRQ);
+    
+	if (IRQ && DEBUG_MODE)
+	{
+		Serial.println("IRQ = 1");
+	}
+	else if (!(IRQ) && DEBUG_MODE)
+	{
+		Serial.println("IRQ = 0");
+	}
+
+	return(IRQ);
+    // Need to add code for disable and enable
+}
+
+
+void WlanInterruptEnable()
+{
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("WlanInterruptEnable");
+	}
+
+	attachInterrupt(1, SPI_IRQ, FALLING); //Attaches Pin 3 to interrupt 1
+}
+
+
+void WlanInterruptDisable()
+{
+	if (DEBUG_MODE)
+	{
+		Serial.println("WlanInterruptDisable");
+	}
+
+	detachInterrupt(1);	//Detaches Pin 3 from interrupt 1
+}
+
+void SPI_IRQ(void)
+{
+
+	// Serial.println("SPI_IRQ!");
+
+	if (sSpiInformation.ulSpiState == eSPI_STATE_POWERUP)
+	{
+		/* This means IRQ line was low call a callback of HCI Layer to inform on event */
+		if (DEBUG_MODE)
+		{
+			Serial.println("SPI-IRQ: eSPI_STATE_POWERUP");
+		}
+		sSpiInformation.ulSpiState = eSPI_STATE_INITIALIZED;
+	}
+	else if (sSpiInformation.ulSpiState == eSPI_STATE_IDLE)
+	{
+		if (DEBUG_MODE)
+		{
+			Serial.println("SPI-IRQ: eSPI_STATE_IDLE");
+		}
+		sSpiInformation.ulSpiState = eSPI_STATE_READ_IRQ;
+			
+		/* IRQ line goes down - we are start reception */
+		digitalWrite(HOST_nCS, LOW);
+
+			//
+			// Wait for TX/RX Compete which will come as DMA interrupt
+			// 
+		//SpiReadHeader();
+
+		sSpiInformation.ulSpiState = eSPI_STATE_READ_EOT;
+			
+			//
+			//
+			//
+		//SSIContReadOperation();
+	}
+	else if (sSpiInformation.ulSpiState == eSPI_STATE_WRITE_IRQ)
+	{
+		if (DEBUG_MODE)
+		{
+			Serial.println("SPI-IRQ: eSPI_STATE_WRITE_IRQ");
+		}
+
+		SpiWriteDataSynchronous(sSpiInformation.pTxPacket, sSpiInformation.usTxPacketLength);
+
+		sSpiInformation.ulSpiState = eSPI_STATE_IDLE;
+
+		digitalWrite(HOST_nCS, HIGH);
+	}
+	// else
+	// {
+	// 	Serial.println(sSpiInformation.ulSpiState);
+	// }
+
+	return;
+
+}
+
+void WriteWlanPin( unsigned char val )
+{
+    
+    if (DEBUG_MODE)
+	{
+		Serial.println("WriteWlanPin");
+		delay(50);
+	}
+
+	if (val)
+	{
+		if (DEBUG_MODE)
+		{	
+			Serial.println("WriteWlanPin = 1");
+			delay(50);
+		}
+		digitalWrite(HOST_VBAT_SW_EN, HIGH);
+	}
+	else
+	{
+		if (DEBUG_MODE)
+		{	
+			Serial.println("WriteWlanPin = 0");
+			delay(50);
+		}
+		digitalWrite(HOST_VBAT_SW_EN, LOW);
+	}
+		
+
+}
+
+
+//*****************************************************************************
+//
+//  The function handles asynchronous events that come from CC3000 device 
+//!		  
+//
+//*****************************************************************************
+
+void CC3000_UsynchCallback(long lEventType, char * data, unsigned char length)
+{
+
+	if (DEBUG_MODE)
+	{
+		Serial.println("CC3000_UsynchCallback");
+	}
+
+  
+	// if (lEventType == HCI_EVNT_WLAN_ASYNC_SIMPLE_CONFIG_DONE)
+	// {
+	// 	//config complete
+	// }
+
+	// if (lEventType == HCI_EVNT_WLAN_UNSOL_CONNECT)
+	// {
+	// 	//connected
+	// }
+
+	// if (lEventType == HCI_EVNT_WLAN_UNSOL_DISCONNECT)
+	// {		
+ //            //disconnected        
+	// }
+        
+	// if (lEventType == HCI_EVNT_WLAN_UNSOL_DHCP)
+	// {
+ //             //dhcp
+	// }
+        
+	// if (lEventType == HCI_EVENT_CC3000_CAN_SHUT_DOWN)
+	// {
+	// 	//ready to shut down
+	// }
+
 }
 
 //*****************************************************************************
@@ -852,48 +892,3 @@ SpiTriggerRxProcessing(void)
 // 		SpiTriggerRxProcessing();
 // 	}
 // }
-
-
-//*****************************************************************************
-//
-//! Indication if TX SPI buffer is empty
-//!
-//!  \param  
-//!
-//!  \return true or false
-//!
-//!  \brief  The function returns 1 if buffer is empty, 0 otherwise 
-//
-//*****************************************************************************
-
-long TXBufferIsEmpty(void)
-{
- // return (UCB0IFG&UCTXIFG);
-
-}
-
-//*****************************************************************************
-//
-//! Indication if RX SPI buffer is empty
-//!
-//!  \param  
-//!
-//!  \return true or false
-//!
-//!  \brief  The function returns 1 if buffer is empty, 0 otherwise 
-//
-//*****************************************************************************
-
-long RXBufferIsEmpty(void)
-{
- // return (UCB0IFG&UCRXIFG);
-   
-
-}
-
-//*****************************************************************************
-//
-// Close the Doxygen group.
-//! @}
-//
-//*****************************************************************************

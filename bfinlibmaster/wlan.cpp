@@ -251,7 +251,6 @@ void SpiReceiveHandler(void *pvBuffer)
 void
 wlan_start(unsigned short usPatchesAvailableAtHost)
 {
-
 	unsigned long ulSpiIRQState;
 	
 	tSLInformation.NumberOfSentPackets = 0;
@@ -273,8 +272,6 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 	//
 	tSLInformation.pucTxCommandBuffer = (unsigned char *)wlan_tx_buffer;
 
-
-
 	//
 	// init spi
 	//
@@ -290,58 +287,43 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
     //
     tSLInformation.WriteWlanPin( WLAN_ENABLE );
 
-
-
-
-
-// *******************************************************
-//    NEED TO VERIFY THIS IF STATEMENT WORKS PROPERLY
-// ****************************************************************
-
-
-
-	// if (ulSpiIRQState)
-	// {
-	// 	//
-	// 	// wait till the IRQ line goes low
-	// 	//
-	// 	while(tSLInformation.ReadWlanInterruptPin() != 0)
-	// 	{
-	// 	}
-	// }
-	// else
-	// {
-	// 	//
-	// 	// wait till the IRQ line goes high and than low
-	// 	//
-	// 	while(tSLInformation.ReadWlanInterruptPin() == 0)
-	// 	{
-	// 	}
-
-	// 	while(tSLInformation.ReadWlanInterruptPin() != 0)
-	// 	{
-	// 	}
-	// }
-
-
+	if (ulSpiIRQState)
+	{
+		//
+		// wait till the IRQ line goes low
+		//
+		Serial.println("Wait till the IRQ line goes low.");
+		delay(50);
 	
-//*******************************************************
-//     Need?? to uncomment this if statement once connected to chip.  NOt sure why its needed
-//****************************************************************
-	//SimpleLink_Init_Start(usPatchesAvailableAtHost);
+		while(tSLInformation.ReadWlanInterruptPin() != 0)
+		{
+		}
+	}
+	else
+	{
+		//
+		// wait till the IRQ line goes high and than low
+		//
+		Serial.println("Wait till the IRQ line goes high then low.");
+
+		while(tSLInformation.ReadWlanInterruptPin() == 0)
+		{
+		}
+
+		while(tSLInformation.ReadWlanInterruptPin() != 0)
+		{
+		}
+	}
+	/*Serial.println("SimpleLink_Init_Start");
+	SimpleLink_Init_Start(usPatchesAvailableAtHost);
 
 	// Read Buffer's size and finish
+	Serial.println("hci_command_send");
 	hci_command_send(HCI_CMND_READ_BUFFER_SIZE, tSLInformation.pucTxCommandBuffer, 0);
-
-
-
-// *******************************************************
-//    NEED TO VERIFY HANDLING OF THIS RETURN MESSAGE FROM CHIP
-// ***************************************************
-	SimpleLinkWaitEvent(HCI_CMND_READ_BUFFER_SIZE, 0);
-
-	
+	Serial.println("SimpleLinkWaitEvent");
+	SimpleLinkWaitEvent(HCI_CMND_READ_BUFFER_SIZE, 0);*/
 }
+
 
 /**
  * \brief wlan stop
@@ -411,6 +393,9 @@ long
 wlan_connect(unsigned long ulSecType, char *ssid, long ssid_len,
              unsigned char *bssid, unsigned char *key, long key_len)
 {
+
+	Serial.println("wlan_connect");
+
     long ret;
     unsigned char *ptr;
     unsigned char *args;
@@ -459,8 +444,10 @@ wlan_connect(unsigned long ulSecType, char *ssid, long ssid_len,
 	//
 	SimpleLinkWaitEvent(HCI_CMND_WLAN_CONNECT, &ret);
 	errno = ret;
+    Serial.println("wlan_connect done.");
 
-    return(ret);
+    return(0);
+
 }
 #else
 long
@@ -495,6 +482,7 @@ wlan_connect(char *ssid, long ssid_len)
     //
     // Initiate a HCI command
     //
+
     hci_command_send(HCI_CMND_WLAN_CONNECT, ptr, WLAN_CONNECT_PARAM_LEN + ssid_len  - 1);
 
 	//
