@@ -292,8 +292,6 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		//
 		// wait till the IRQ line goes low
 		//
-		Serial.println("Wait till the IRQ line goes low.");
-		delay(50);
 	
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
 		{
@@ -304,7 +302,6 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		//
 		// wait till the IRQ line goes high and than low
 		//
-		Serial.println("Wait till the IRQ line goes high then low.");
 
 		while(tSLInformation.ReadWlanInterruptPin() == 0)
 		{
@@ -438,13 +435,17 @@ wlan_connect(unsigned long ulSecType, char *ssid, long ssid_len,
     // Initiate a HCI command
     //
     hci_command_send(HCI_CMND_WLAN_CONNECT, ptr, WLAN_CONNECT_PARAM_LEN + ssid_len + key_len - 1);
-
+	WlanInterruptDisable();
+	Serial.println("wlan_connect done.");
+	delay(50);
+	print_spi_state();
+	WlanInterruptEnable();
 	//
 	// Wait for command complete event
 	//
-	SimpleLinkWaitEvent(HCI_CMND_WLAN_CONNECT, &ret);
-	errno = ret;
-    Serial.println("wlan_connect done.");
+	//SimpleLinkWaitEvent(HCI_CMND_WLAN_CONNECT, &ret);
+	//errno = ret;
+
 
     return(0);
 

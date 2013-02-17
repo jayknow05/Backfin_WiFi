@@ -66,6 +66,7 @@ extern long ReadWlanInterruptPin(void);
 extern void WlanInterruptEnable();
 extern void WlanInterruptDisable();
 extern void WriteWlanPin( unsigned char val );
+extern void print_spi_state(void);
 
 //*****************************************************************************
 //
