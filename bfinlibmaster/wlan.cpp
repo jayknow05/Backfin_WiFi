@@ -125,9 +125,10 @@ static void SimpleLink_Init_Start(unsigned short usPatchesAvailableAtHost)
 	
 
 	// IRQ Line asserted - start the read buffer size command
+
 	hci_command_send(HCI_CMND_SIMPLE_LINK_START, ptr, WLAN_SL_INIT_START_PARAMS_LEN);
-	
 	SimpleLinkWaitEvent(HCI_CMND_SIMPLE_LINK_START, 0);
+
 }
 
 
@@ -182,7 +183,6 @@ void wlan_init(		tWlanCB	 	sWlanCB,
                 tWlanInterruptDisable sWlanInterruptDisable,
                 tWriteWlanPin         sWriteWlanPin)
 {
-
 
 	tSLInformation.sFWPatches = sFWPatches;
 	tSLInformation.sDriverPatches = sDriverPatches;
@@ -251,6 +251,7 @@ void SpiReceiveHandler(void *pvBuffer)
 void
 wlan_start(unsigned short usPatchesAvailableAtHost)
 {
+	
 	unsigned long ulSpiIRQState;
 	
 	tSLInformation.NumberOfSentPackets = 0;
@@ -281,8 +282,8 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 	// Check the IRQ line
 	//
 	ulSpiIRQState = tSLInformation.ReadWlanInterruptPin();
-	
-    //
+
+	//
     // ASIC 1273 chip enable: toggle WLAN EN line
     //
     tSLInformation.WriteWlanPin( WLAN_ENABLE );
@@ -292,33 +293,31 @@ wlan_start(unsigned short usPatchesAvailableAtHost)
 		//
 		// wait till the IRQ line goes low
 		//
-	
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
-		{
-		}
+			;
 	}
 	else
 	{
 		//
 		// wait till the IRQ line goes high and than low
 		//
-
-		while(tSLInformation.ReadWlanInterruptPin() == 0)
-		{
-		}
+		//while(tSLInformation.ReadWlanInterruptPin() == 0)
+			;
 
 		while(tSLInformation.ReadWlanInterruptPin() != 0)
-		{
-		}
+			;
+		
 	}
-	/*Serial.println("SimpleLink_Init_Start");
-	SimpleLink_Init_Start(usPatchesAvailableAtHost);
 
+	Serial.println("About to SimpleLink_Init_Start");
+
+	SimpleLink_Init_Start(usPatchesAvailableAtHost);
+	Serial.println("SimpleLink_Init_Start done.");
 	// Read Buffer's size and finish
-	Serial.println("hci_command_send");
+
 	hci_command_send(HCI_CMND_READ_BUFFER_SIZE, tSLInformation.pucTxCommandBuffer, 0);
-	Serial.println("SimpleLinkWaitEvent");
-	SimpleLinkWaitEvent(HCI_CMND_READ_BUFFER_SIZE, 0);*/
+	Serial.println("hci_command_send done.");
+	SimpleLinkWaitEvent(HCI_CMND_READ_BUFFER_SIZE, 0);
 }
 
 
@@ -435,11 +434,9 @@ wlan_connect(unsigned long ulSecType, char *ssid, long ssid_len,
     // Initiate a HCI command
     //
     hci_command_send(HCI_CMND_WLAN_CONNECT, ptr, WLAN_CONNECT_PARAM_LEN + ssid_len + key_len - 1);
-	WlanInterruptDisable();
-	Serial.println("wlan_connect done.");
-	delay(50);
-	print_spi_state();
-	WlanInterruptEnable();
+	//WlanInterruptDisable();
+	//print_spi_state();
+	//WlanInterruptEnable();
 	//
 	// Wait for command complete event
 	//

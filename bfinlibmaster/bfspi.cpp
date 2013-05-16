@@ -15,10 +15,6 @@
 #define HI(value)               (((value) & 0xFF00) >> 8)
 #define LO(value)               ((value) & 0x00FF)
 
-#define ASSERT_CS()          (P1OUT &= ~BIT3)
-
-#define DEASSERT_CS()        (P1OUT |= BIT3)
-
 #define HEADERS_SIZE_EVNT       (SPI_HEADER_SIZE + 5)
 
 #define SPI_HEADER_SIZE			(5)
@@ -34,20 +30,18 @@
 #define 	eSPI_STATE_READ_EOT				 (8)
 
 #define CC3000_nIRQ 	(3)
-#define HOST_nCS		(10)
-#define HOST_VBAT_SW_EN (8)
+#define HOST_nCS		(8)
+#define HOST_VBAT_SW_EN (10)
 #define LED 			(6)
 
 #define DEBUG_MODE		(1)
 
 
-//foor spi bus loop
-int loc = 0; 
-
 char ssid[] = "KYD03";                     // your network SSID (name) 
 unsigned char keys[] = "bellacody";       // your network key
 unsigned char bssid[] = "KYD03";       // your network key
-int keyIndex = 0; 
+int keyIndex = 0;
+int LED_status = 0;
 
 
 typedef struct
@@ -70,7 +64,7 @@ tSpiInformation sSpiInformation;
 unsigned char tSpiReadHeader[] = {READ, 0x00, 0x00};
 
 
-char SpiWriteDataSynchronous(unsigned char *data, unsigned short size);
+void SpiWriteDataSynchronous(unsigned char *data, unsigned short size);
 void SpiWriteAsync(const unsigned char *data, unsigned short size);
 void SpiPauseSpi(void);
 void SpiResumeSpi(void);
@@ -188,14 +182,16 @@ void SpiOpen(gcSpiHandleRx pfRxHandler)
 	if (DEBUG_MODE)
 	{
 		Serial.println("SpiOpen");
+		Serial.println("Initializing SPI...");
 	}
 
     pinMode(CC3000_nIRQ, INPUT);
     pinMode(HOST_nCS, OUTPUT);
-    pinMode(HOST_VBAT_SW_EN, OUTPUT);
+	pinMode(HOST_VBAT_SW_EN, OUTPUT);
+	digitalWrite(HOST_nCS, HIGH);
 
 
-    Serial.println("Initializing SPI...");
+
     //Initialize SPI
     SPI.begin();
 
@@ -228,6 +224,7 @@ void SpiOpen(gcSpiHandleRx pfRxHandler)
 //	Enable interrupt on the GPIOA pin of WLAN IRQ
 	
 	tSLInformation.WlanInterruptEnable();
+
 }
 
 
@@ -257,20 +254,18 @@ long SpiFirstWrite(unsigned char *ucBuf, unsigned short usLength)
 
    	digitalWrite(HOST_nCS, LOW);
 
-	delay(50);
+	delayMicroseconds(60);
 	
     // SPI writes first 4 bytes of data
     SpiWriteDataSynchronous(ucBuf, 4);
 
-    delay(50);
+    delayMicroseconds(50);
 	
     SpiWriteDataSynchronous(ucBuf + 4, usLength - 4);
 
     // From this point on - operate in a regular way
 	sSpiInformation.ulSpiState = eSPI_STATE_IDLE;
-
-	digitalWrite(HOST_nCS, HIGH);
-
+	Serial.println("SpiFirstWrite done.");
     return(0);
 }
 
@@ -282,7 +277,7 @@ long SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 		Serial.println("SpiWrite");
 	}
 
-    unsigned char ucPad = 0;
+	unsigned char ucPad = 0;
 
 	//
 	// Figure out the total length of the packet in order to figure out if there is padding or not
@@ -291,14 +286,14 @@ long SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
     {
         ucPad++;
     }
-	
+
     pUserBuffer[0] = WRITE;
     pUserBuffer[1] = HI(usLength + ucPad);
     pUserBuffer[2] = LO(usLength + ucPad);
-    pUserBuffer[3] = 0;
-    pUserBuffer[4] = 0;
+    pUserBuffer[3] = 0x00;
+    pUserBuffer[4] = 0x00;
 
-	usLength += (SPI_HEADER_SIZE);
+	usLength += (SPI_HEADER_SIZE + ucPad);	
 
         	
         // The magic number that resides at the end of the TX/RX buffer (1 byte after the allocated size)
@@ -329,6 +324,8 @@ long SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 	else 
 	{
 		
+		tSLInformation.WlanInterruptDisable();
+
 		while (sSpiInformation.ulSpiState != eSPI_STATE_IDLE)
 		{
 			;
@@ -338,8 +335,9 @@ long SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 		sSpiInformation.pTxPacket = pUserBuffer;
 		sSpiInformation.usTxPacketLength = usLength;
 		
+   		digitalWrite(HOST_nCS, HIGH);
 
-   		digitalWrite(HOST_nCS, LOW);
+		tSLInformation.WlanInterruptEnable();
 
 	}
 	
@@ -350,29 +348,30 @@ long SpiWrite(unsigned char *pUserBuffer, unsigned short usLength)
 
 	while (eSPI_STATE_IDLE != sSpiInformation.ulSpiState)
 		;
+
+	Serial.println("SpiWrite done.");
 	
     return(0);
 
 }
 
-char SpiWriteDataSynchronous(unsigned char *data, unsigned short size)
+void SpiWriteDataSynchronous(unsigned char *data, unsigned short size)
 {
-	tSLInformation.WlanInterruptDisable();
+	//tSLInformation.WlanInterruptDisable();
 	if (DEBUG_MODE)
 	{
 		Serial.println("SpiWriteDataSynchronous");
 	}
 	
-	char result;
+	//char result;
 
-	for (loc = 0; loc < size; loc ++) 
+	for (int loc = 0; loc < size; loc ++) 
 	{
 
 		SPDR = data[loc];                    // Start the transmission
 		while (!(SPSR & (1<<SPIF)))     // Wait the end of the transmission
 	    	;
-		delay(50);
-	    result = SPDR;
+
 		if (DEBUG_MODE)
 		{
 			if (!(loc==size-1))
@@ -391,10 +390,11 @@ char SpiWriteDataSynchronous(unsigned char *data, unsigned short size)
 	if (DEBUG_MODE)
 	{
 		Serial.println("SpiWriteDataSynchronous done.");
-		delay(50);
+		//delay(50);
 	}
-	tSLInformation.WlanInterruptEnable();
-	return result;
+
+	//tSLInformation.WlanInterruptEnable();
+	return;
 
 }
 
@@ -414,27 +414,50 @@ void SpiReadDataSynchronous(unsigned char *data, unsigned short size)
 	//SPDR = 0;                    // Start the transmission
 	//while (!(SPSR & (1<<SPIF)))     // Wait the end of the transmission
     	//;
-	delay(50);
-    unsigned char result = SPDR;
-	delay(50);
+	delayMicroseconds(50);
+    unsigned char  msb = SPDR;
+	delayMicroseconds(100);
+    unsigned char  lsb = SPDR;
+	delayMicroseconds(100);
 	
-	int i = 0;
-	while (!(result))
+	if (DEBUG_MODE)
 	{
-		if (DEBUG_MODE)
-		{
-			Serial.print(result);
-			Serial.print(" ");
-		}
-		SPDR = i;
-		delay(50);
-		result = SPDR;
-
+		Serial.println(" ");
+		Serial.print("First Byte: ");
+		Serial.println(msb);
+		Serial.print("Second Byte: ");
+		Serial.println(lsb);
+	}
+	
+	unsigned int payload_length = (msb<<8)|(lsb);
+	
+	if (DEBUG_MODE)
+	{
+		Serial.println(" ");
+		Serial.print("Payload Length: ");
+		Serial.println(payload_length);
 	}
 
-	Serial.println(" ");
-	Serial.print("Result: ");
-	Serial.println(result);
+	for (unsigned int loc = 0; loc < payload_length; loc ++) 
+	{
+		while (!(SPSR & (1<<SPIF)))
+			;    // Wait the end of the transmission
+		data[loc] = SPDR;
+		
+		if (DEBUG_MODE)
+		{
+			if (!(loc==payload_length-1))
+			{
+				Serial.print(data[loc]); 
+				Serial.print(" ");
+			}
+			else
+			{
+				Serial.println(data[loc]);
+			}
+		}
+	}
+
 
 	//while (!(SPSR & (1<<SPIF)))
 	//	;    // Wait the end of the transmission
@@ -466,6 +489,8 @@ void SpiReadHeader(void)
 	{
 		Serial.println("SpiReadHeader");
 	}
+	//digitalWrite(HOST_nCS, HIGH);
+	//delay(50);
 
 	SpiReadDataSynchronous(sSpiInformation.pRxPacket, 10);
 
@@ -587,20 +612,19 @@ void SpiTriggerRxProcessing(void)
 int test(void)
 {
 
-	Serial.println("Calling wlan_init");
 	wlan_init(CC3000_UsynchCallback, NULL, NULL, NULL, ReadWlanInterruptPin, WlanInterruptEnable, WlanInterruptDisable, WriteWlanPin);
 
-	Serial.println("Starting wlan...");
 	wlan_start(0);
- 
-	Serial.println("Attempting to connect...");
-	wlan_connect(WLAN_SEC_UNSEC,ssid,10, bssid, keys, 16);
+	SpiReadHeader();
+
+	Serial.println("Done. MOTHERFUCKER");
+	//wlan_connect(WLAN_SEC_UNSEC,ssid,10, bssid, keys, 16);
 
 	return(0);
 }
 
 
-//*****************************************************************************
+//****************************************************************************
 //
 //! Returns state of IRQ pin
 //!
@@ -610,11 +634,11 @@ int test(void)
 long ReadWlanInterruptPin(void)
 {
 
-	if (DEBUG_MODE)
+	/*if (DEBUG_MODE)
 	{
-		Serial.println("ReadWlanInterruptPin");
-	}
-
+		Serial.print("ReadWlanInterruptPin: ");
+		Serial.println(digitalRead(CC3000_nIRQ));
+	}*/
 	return(digitalRead(CC3000_nIRQ));
 
 }
@@ -626,9 +650,8 @@ void WlanInterruptEnable()
 	if (DEBUG_MODE)
 	{
 		Serial.println("WlanInterruptEnable.");
-		delay(50);
 	}
-	Serial.println(digitalRead(CC3000_nIRQ));
+
 	attachInterrupt(1, SPI_IRQ, FALLING); //Attaches Pin 3 to interrupt 1
 }
 
@@ -645,6 +668,16 @@ void WlanInterruptDisable()
 
 void SPI_IRQ(void)
 {
+	if (LED_status)
+	{
+		LED_status = 0;
+		digitalWrite(LED, LOW);
+	}
+	else
+	{
+		LED_status = 1;
+		digitalWrite(LED, HIGH);
+	}
 	if (sSpiInformation.ulSpiState == eSPI_STATE_POWERUP)
 	{
 		/* This means IRQ line was low call a callback of HCI Layer to inform on event */
@@ -653,10 +686,10 @@ void SPI_IRQ(void)
 	else if (sSpiInformation.ulSpiState == eSPI_STATE_IDLE)
 	{
 		sSpiInformation.ulSpiState = eSPI_STATE_READ_IRQ;
-		digitalWrite(LED,HIGH);
+		digitalWrite(LED, LOW);
 		/* IRQ line goes down - we are start reception */
 		digitalWrite(HOST_nCS, LOW);
-		digitalWrite(LED,LOW);
+		
 		//
 		// Wait for TX/RX Compete which will come as DMA interrupt
 		// 

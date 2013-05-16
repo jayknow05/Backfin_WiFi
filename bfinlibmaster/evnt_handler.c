@@ -46,7 +46,7 @@
 #include "wlan.h"
 #include "socket.h"
 #include "netapp.h"
-//#include <bfspi.h>
+//#include "spi.h"
 
 
 unsigned long socket_active_status = SOCKET_STATUS_INIT_VAL;  
@@ -85,7 +85,6 @@ unsigned long socket_active_status = SOCKET_STATUS_INIT_VAL;
 #define NETAPP_IPCONFIG_MAC_OFFSET				(20)
 #define NETAPP_IPCONFIG_SSID_OFFSET				(26)
 
-#define NETAPP_IPCONFIG_IP_LENGTH				(4)
 #define NETAPP_IPCONFIG_MAC_LENGTH				(6)
 #define NETAPP_IPCONFIG_SSID_LENGTH				(32)
 
@@ -208,7 +207,6 @@ void hci_unsol_handle_patch_request(char *event_hdr)
 //
 //*****************************************************************************
 
-	
 unsigned char *
 hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
 {
@@ -217,17 +215,12 @@ hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
 	unsigned char *pucReceivedParams;
 	unsigned short usReceivedEventOpcode = 0;
 	unsigned long retValue32;
-  unsigned char * RecvParams;
-  unsigned char *RetParams;
-
 	
 	while (1)
 	{
 		if (tSLInformation.usEventOrDataReceived != 0)
 		{				
 			pucReceivedData = (tSLInformation.pucReceivedData);
-			
-
 			
 			if (*pucReceivedData == HCI_TYPE_EVNT)
 			{
@@ -236,9 +229,6 @@ hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
 				//
 				STREAM_TO_UINT16((char *)pucReceivedData, HCI_EVENT_OPCODE_OFFSET,usReceivedEventOpcode);
 				pucReceivedParams = pucReceivedData + HCI_EVENT_HEADER_SIZE;
-				
-			RecvParams = pucReceivedParams;
-			RetParams = pRetParams;
 				//
 				// In case unsolicited event received - here the handling finished
 				//
@@ -284,7 +274,6 @@ hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
 						case HCI_EVNT_BIND:
 						case HCI_CMND_LISTEN:
 			  			case HCI_EVNT_CLOSE_SOCKET:
-						case HCI_EVNT_MDNS_ADVERTISE:
                                                 case HCI_EVNT_CONNECT:
 												case HCI_EVNT_NVMEM_WRITE:
 
@@ -310,10 +299,9 @@ hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
 							STREAM_TO_UINT32((char *)pucReceivedParams,ACCEPT_SD_OFFSET,*(unsigned long *)pRetParams);
 							pRetParams = ((char *)pRetParams) + 4;
 							STREAM_TO_UINT32((char *)pucReceivedParams,ACCEPT_RETURN_STATUS_OFFSET,*(unsigned long *)pRetParams);
-              pRetParams = ((char *)pRetParams) + 4; 
+                            pRetParams = ((char *)pRetParams) + 4; 
 							//This argurment returns in network order, therefore the use of memcpy.                                                      
-							memcpy((unsigned char *)pRetParams, pucReceivedParams + ACCEPT_ADDRESS__OFFSET, sizeof(sockaddr));
-
+							memcpy((unsigned char *)pRetParams, pucReceivedParams, sizeof(sockaddr));
 
 
 				            break;
@@ -383,34 +371,26 @@ hci_event_handler(void *pRetParams, unsigned char *from, unsigned char *fromlen)
 
 						case HCI_NETAPP_IPCONFIG:
 							
-							//Read IP address
-							STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_IP_LENGTH);
-							RecvParams += 4;
-							
-							//Read Subnet
-							STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_IP_LENGTH);
-							RecvParams += 4;
-							
-							//Read default GW
-							STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_IP_LENGTH);
-							RecvParams += 4;
-							
-              //Read DHCP server                                          	
-							STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_IP_LENGTH);
-							RecvParams += 4;
-							
-              //Read DNS server                                           
-							STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_IP_LENGTH);
-              RecvParams += 4;
-							
-              //Read Mac address                            	
-							STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_MAC_LENGTH);
-							RecvParams += 6;
-							
-							//Read SSID
-							 STREAM_TO_STREAM(RecvParams,RetParams,NETAPP_IPCONFIG_SSID_LENGTH);
-							
+							STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_IP_OFFSET,*(unsigned long *)pRetParams);
+							pRetParams = ((char *)pRetParams) + 4;
                                                         
+							STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_SUBNET_OFFSET,*(unsigned long *)pRetParams);
+							pRetParams = ((char *)pRetParams) + 4;
+                                                        
+							STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_GW_OFFSET,*(unsigned long *)pRetParams);
+							pRetParams = ((char *)pRetParams) + 4;
+                                                        
+							STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_DHCP_OFFSET,*(unsigned long *)pRetParams);
+							pRetParams = ((char *)pRetParams) + 4;
+                                                        
+							STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_DNS_OFFSET,*(unsigned long *)pRetParams);
+							pRetParams = ((char *)pRetParams) + 4;
+                                                        
+                                                        STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_MAC_OFFSET,*(unsigned long *)pRetParams);
+							pRetParams = ((char *)pRetParams) + 6;
+                                                        
+                                                        STREAM_TO_UINT32((char *)pucReceivedParams,NETAPP_IPCONFIG_SSID_OFFSET,*(unsigned long *)pRetParams);
+							
 														
 					}
 				}
@@ -490,8 +470,6 @@ hci_unsol_event_handler(char *event_hdr)
 {
     char * data = NULL;
     long event_type;
-		unsigned long NumberOfReleasedPackets;
-		unsigned long NumberOfSentPackets;
 
 	STREAM_TO_UINT16(event_hdr, HCI_EVENT_OPCODE_OFFSET,event_type);
 	
@@ -502,12 +480,8 @@ hci_unsol_event_handler(char *event_hdr)
             case HCI_EVNT_DATA_UNSOL_FREE_BUFF:
             {
                 hci_event_unsol_flowcontrol_handler(event_hdr);
-								
-								NumberOfReleasedPackets = tSLInformation.NumberOfReleasedPackets;
-								NumberOfSentPackets = tSLInformation.NumberOfSentPackets;
-								
 
-                if (NumberOfReleasedPackets == NumberOfSentPackets)
+                if (tSLInformation.NumberOfReleasedPackets==tSLInformation.NumberOfSentPackets)
                 	    {
 							if (tSLInformation.InformHostOnTxComplete)
 							{
@@ -538,27 +512,18 @@ hci_unsol_event_handler(char *event_hdr)
 			case HCI_EVNT_WLAN_UNSOL_DHCP:
 			{
 				tNetappDhcpParams params;
-				unsigned char *recParams = (unsigned char *)&params;
 				
 				data = (char*)(event_hdr) + HCI_EVENT_HEADER_SIZE;
 
-				//Read IP address
-				STREAM_TO_STREAM(data,recParams,NETAPP_IPCONFIG_IP_LENGTH);
-				data += 4;
-				//Read subnet
-				STREAM_TO_STREAM(data,recParams,NETAPP_IPCONFIG_IP_LENGTH);
-				data += 4;
-				//Read default GW
-				STREAM_TO_STREAM(data,recParams,NETAPP_IPCONFIG_IP_LENGTH); 
-				data += 4;
-				//Read DHCP server  
-        STREAM_TO_STREAM(data,recParams,NETAPP_IPCONFIG_IP_LENGTH);     
-				data += 4;
-				//Read DNS server  
-		  	STREAM_TO_STREAM(data,recParams,NETAPP_IPCONFIG_IP_LENGTH); 
+				STREAM_TO_UINT32(data, NETAPP_IPCONFIG_IP_OFFSET, *(long *)params.aucIP);
+				
+				STREAM_TO_UINT32(data, NETAPP_IPCONFIG_SUBNET_OFFSET, *(long *)params.aucSubnetMask);
+				
+				STREAM_TO_UINT32(data, NETAPP_IPCONFIG_GW_OFFSET, *(long *)params.aucDefaultGateway);
+				
+				STREAM_TO_UINT32(data, NETAPP_IPCONFIG_DHCP_OFFSET, *(long *)params.aucDHCPServer);
 
-
-
+				STREAM_TO_UINT32(data, NETAPP_IPCONFIG_DNS_OFFSET, *(long *)params.aucDNSServer);
 
 				if( tSLInformation.sWlanCB )
 				{
@@ -601,7 +566,7 @@ hci_unsol_event_handler(char *event_hdr)
 		// The only synchronous event that can come from SL device in form of command complete is
 		// "Command Complete" on data sent, in case SL device was unable to transmit
 		//
-		STREAM_TO_UINT8(event_hdr, HCI_EVENT_STATUS_OFFSET, tSLInformation.slTransmitDataError);
+		STREAM_TO_UINT8(event_hdr, HCI_EVENT_LENGTH_OFFSET, tSLInformation.slTransmitDataError);
         update_socket_active_status(M_BSD_RESP_PARAMS_OFFSET(event_hdr));
 
 		return (1);
